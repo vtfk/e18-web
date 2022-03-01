@@ -1,0 +1,11 @@
+@import "~@vtfk/components/src/ui/Tokens/tokens.scss";
+
+.top-content {
+  display: flex;
+}
+
+.main-content {
+  position: relative;
+  border: 2px solid red;
+  margin: ($baseUnit * 4) auto;
+}
