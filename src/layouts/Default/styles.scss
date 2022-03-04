@@ -1,9 +1,11 @@
 @import "~@vtfk/components/src/ui/Tokens/tokens.scss";
 
+$sideNavWidth: 200px;
+
 .default-layout {
   .sidenav {
     background: $stein-1;
-    min-width: 200px;
+    min-width: $sideNavWidth;
 
     .sidenav-list-wrapper {
 
@@ -29,7 +31,8 @@
       margin: ($baseUnit * 4) auto;
 
       @media(min-width: 1001px) {
-        margin-left: 216px; // (sidenav min-width) + ($baseUnit * 2)
+        margin-left: $sideNavWidth + ($baseUnit * 4); // 232px;
+        margin-right: $baseUnit * 4; // 32px
         min-width: -200px;
       }
 
