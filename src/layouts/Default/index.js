@@ -1,9 +1,6 @@
 import React from 'react'
 
-import { Icon, IconDropdownNavItem, SideNav, SideNavItem } from '@vtfk/components'
-
-import { TopBar } from '../../components/TopBar'
-import { TopNav, TopNavItem } from '../../components/TopNav'
+import { IconDropdownNavItem, SideNav, TopBar } from '@vtfk/components'
 
 import './styles.scss'
 
@@ -13,20 +10,20 @@ const user = {
   lastName: 'Beider'
 }
 
-const navItems = [
+const items = [
   {
-    path: '/',
+    href: '/',
     icon: {
       name: 'home'
     },
-    text: 'Hoppsann'
+    title: 'Hoppsann'
   },
   {
-    path: 'https://www.db.no',
+    href: 'https://www.db.no',
     icon: {
       name: 'classes'
     },
-    text: 'Uppsann'
+    title: 'Uppsann'
   }
 ]
 
@@ -41,32 +38,7 @@ export function DefaultLayout (props) {
   return (
     <div className='default-layout'>
 
-      {/* Navigation shown on screen sizes greater than 1000px */}
-      <SideNav title='E18'>
-        {
-          navItems.map((item, index) => {
-            return (
-              <SideNavItem key={index} href={item.path} icon={<Icon name={item.icon.name} size={item.icon.size || 'medium'} />} title={item.text} active={window.location.pathname === item.path} />
-            )
-          })
-        }
-      </SideNav>
-
-      {/* Navigation shown on screen sizes less than or equal to 1000px */}
-      <TopNav
-        brandName='E18'
-        displayName={user.displayName}
-        firstName={user.firstName}
-        lastName={user.lastName}
-        menuItems={menuItems}>
-          {
-            navItems.map((item, index) => {
-              return (
-                <TopNavItem key={index} href={item.path} icon={<Icon name={item.icon.name} size={item.icon.size || 'medium'} />} title={item.text} active={window.location.pathname === item.path} />
-              )
-            })
-          }
-      </TopNav>
+      <SideNav title='E18' items={items} useMini />
 
       <div className='container'>
 
@@ -75,7 +47,7 @@ export function DefaultLayout (props) {
           {
             menuItems.map((item, index) => {
               return (
-                <IconDropdownNavItem key={index} onClick={item.onClick} title={item.title} closeOnClick={true} />
+                <IconDropdownNavItem key={index} onClick={item.onClick} title={item.title} closeOnClick />
               )
             })
           }
