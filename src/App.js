@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import { Home } from './pages/Home'
+import { Queue } from './pages/Queue'
+import { Statistics } from './pages/Statistics'
+import { APIKeys } from './pages/APIKeys'
 import { PageNotFound } from './pages/PageNotFound'
 
 function App() {
@@ -8,7 +10,9 @@ function App() {
     <Router>
       <div className='app'>
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Queue />} />
+          <Route path='/statistics' element={<Statistics />} />
+          <Route path='/apikeys' element={<APIKeys />} />
 
           <Route path='*' element={<PageNotFound />} />
         </Routes>

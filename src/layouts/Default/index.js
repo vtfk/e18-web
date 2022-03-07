@@ -14,16 +14,23 @@ const items = [
   {
     href: '/',
     icon: {
-      name: 'home'
+      name: 'activity'
     },
-    title: 'Hoppsann'
+    title: 'Queue'
   },
   {
-    href: 'https://www.db.no',
+    href: '/statistics',
     icon: {
-      name: 'classes'
+      name: 'statistics'
     },
-    title: 'Uppsann'
+    title: 'Statistikk'
+  },
+  {
+    href: '/apikeys',
+    icon: {
+      name: 'students'
+    },
+    title: 'API-nøkler'
   }
 ]
 
