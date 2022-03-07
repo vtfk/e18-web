@@ -23,14 +23,14 @@ const items = [
     icon: {
       name: 'statistics'
     },
-    title: 'Statistikk'
+    title: 'Statistics'
   },
   {
     href: '/apikeys',
     icon: {
       name: 'students'
     },
-    title: 'API-nøkler'
+    title: 'API-keys'
   }
 ]
 
