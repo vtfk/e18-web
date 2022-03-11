@@ -3,6 +3,16 @@
 $sideNavWidth: 200px;
 
 .default-layout {
+  padding-left: $sideNavWidth + ($baseUnit * 4);
+  padding-bottom: $baseUnit * 6;
+  max-width: 100%;
+
+  @media(max-width: 1000px) {
+    padding-left: 0;
+    padding-bottom: $baseUnit * 3;
+    overflow: hidden;
+  }
+
   .sidenav {
     background: $stein-1;
     min-width: $sideNavWidth;
@@ -26,19 +36,11 @@ $sideNavWidth: 200px;
   }
 
   .container {
+    max-width: 1400px;
+    margin: ($baseUnit * 4) 130px ($baseUnit * 4) 100px;
 
-    .main-content {
-      margin: ($baseUnit * 4) auto;
-
-      @media(min-width: 1001px) {
-        margin-left: $sideNavWidth + ($baseUnit * 4); // 232px;
-        margin-right: $baseUnit * 4; // 32px
-        min-width: -200px;
-      }
-
-      @media(max-width: 1000px) {
-        padding: 0 ($baseUnit * 2);
-      }
+    @media(max-width: 1000px) {
+      padding: 0 ($baseUnit * 2);
     }
   }
 }

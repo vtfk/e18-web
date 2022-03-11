@@ -1,3 +1,11 @@
 .stats {
-  max-width: 800px;
+  min-width: 1012px;
+
+  @media(max-width: 1485px) {
+    min-width: auto;
+
+    .statistics-card-group {
+      flex-wrap: wrap;
+    }
+  }
 }

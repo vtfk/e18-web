@@ -47,22 +47,19 @@ export function DefaultLayout (props) {
 
       <SideNav title='E18' items={items} useMini />
 
+      {/* Menu bar shown on screen sizes greater than 1000px */}
+      <TopBar displayName={user.displayName} firstName={user.firstName} lastName={user.lastName}>
+        {
+          menuItems.map((item, index) => {
+            return (
+              <IconDropdownNavItem key={index} onClick={item.onClick} title={item.title} closeOnClick />
+            )
+          })
+        }
+      </TopBar>
+
       <div className='container'>
-
-        {/* Menu bar shown on screen sizes greater than 1000px */}
-        <TopBar displayName={user.displayName} firstName={user.firstName} lastName={user.lastName}>
-          {
-            menuItems.map((item, index) => {
-              return (
-                <IconDropdownNavItem key={index} onClick={item.onClick} title={item.title} closeOnClick />
-              )
-            })
-          }
-        </TopBar>
-
-        <div className='main-content'>
-          {props.children}
-        </div>
+        {props.children}
       </div>
     </div>
   )
