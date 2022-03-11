@@ -1,3 +1,5 @@
+@import "~@vtfk/components/src/ui/Tokens/tokens.scss";
+
 .stats {
   min-width: 1012px;
 
@@ -8,4 +10,19 @@
       flex-wrap: wrap;
     }
   }
+
+  .card-type-active {
+    background: $zanah;
+    border: 1px ridge black;
+
+    .card-link-icon {
+      svg {
+        transform: rotate(90deg);
+      }
+    }
+  }
+}
+
+.queue {
+  
 }
