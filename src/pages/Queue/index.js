@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 
-import { StatisticsGroup, StatisticsCard } from '@vtfk/components'
-
-import { Table } from '../../components/Table'
+import { StatisticsGroup, StatisticsCard, Table } from '@vtfk/components'
 
 import { DefaultLayout } from '../../layouts/Default'
 
