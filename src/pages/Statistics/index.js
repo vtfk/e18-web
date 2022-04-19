@@ -1,5 +1,10 @@
+import { useEffect, useState } from 'react'
 import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2'
 import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
+import { Skeleton } from '@vtfk/components'
+import { uniqBy } from 'lodash'
+
+import useAPI from '../../hooks/useAPI'
 
 import { DefaultLayout } from '../../layouts/Default'
 
@@ -16,7 +21,7 @@ const randomData = (labels, min, max, rounded = true) => {
   return rand()
 }
 
-const labels = [
+const labelsMock = [
   'Januar',
   'Februar',
   'Mars',
@@ -30,43 +35,94 @@ const options = {
   plugins: {
     legend: {
       position: 'top'
-    },
+    }/* ,
     title: {
       display: true,
       text: 'Charts'
-    }
+    } */
   }
 }
 
-const barData = {
-  labels,
+const barDataMock = {
+  labels: labelsMock,
   datasets: [
     {
       label: 'Dataset 1',
       backgroundColor: `rgb(${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)})`,
       borderColor: `rgb(${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)})`,
-      data: randomData(labels, 0, 1000)
+      data: randomData(labelsMock, 0, 1000)
     },
     {
       label: 'Dataset 2',
       backgroundColor: `rgb(${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)})`,
       borderColor: `rgb(${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)})`,
-      data: randomData(labels, 0, 1000)
+      data: randomData(labelsMock, 0, 1000)
     }
   ]
 }
 
 const doughnutData = {
-  labels,
+  labels: labelsMock,
   datasets: [
     {
       label: 'Where is this?? 🤷‍♂️',
-      data: randomData(labels, 0, 100),
-      backgroundColor: labels.map(() => `rgba(${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 1, false)})`),
-      borderColor: labels.map(() => `rgba(${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 1, false)})`),
+      data: randomData(labelsMock, 0, 100),
+      backgroundColor: labelsMock.map(() => `rgba(${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 1, false)})`),
+      borderColor: labelsMock.map(() => `rgba(${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 1, false)})`),
       borderWidth: 1
     }
   ]
+}
+
+const getSystemsData = queue => {
+  const labels = uniqBy(queue.map(item => item.system), value => value.toLowerCase())
+  const data = labels.map(label => queue.filter(item => item.system.toLowerCase() === label.toLowerCase()).length)
+
+  return {
+    labels,
+    datasets: [
+      {
+        label: 'Systems',
+        backgroundColor: `rgb(${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)})`,
+        borderColor: `rgb(${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)})`,
+        data
+      }
+    ]
+  }
+}
+
+const getTasksData = queue => {
+  const labels = []
+  const internalLabels = []
+  const data = []
+
+  queue.forEach(item => {
+    if (!item.tasks || item.tasks.length === 0) return
+
+    item.tasks.forEach(task => {
+      const name = task.system.toLowerCase()
+      const labelIndex = internalLabels.indexOf(name)
+      if (labelIndex > -1) {
+        data[labelIndex]++
+      } else {
+        labels.push(task.system)
+        internalLabels.push(name)
+        data.push(1)
+      }
+    })
+  })
+
+  return {
+    labels,
+    datasets: [
+      {
+        label: 'Tasks',
+        backgroundColor: `rgb(${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)})`,
+        borderColor: `rgb(${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)}, ${randomData(undefined, 0, 255)})`,
+        data
+      }
+    ]
+  }
 }
 
 // Chart.js is tree-shakeable, so it is necessary to import and register the controllers, elements, scales and plugins we are going to use
@@ -82,19 +138,54 @@ const doughnutData = {
 ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend)
 
 export function Statistics () {
+  const { allQueue, loading } = useAPI('statistics')
+  const [systemsData, setSystemsData] = useState(barDataMock)
+  const [tasksData, setTasksData] = useState(barDataMock)
+
+  useEffect(() => {
+    if (allQueue.length === 0) return
+    const _systemsData = getSystemsData(allQueue)
+    const _tasksData = getTasksData(allQueue)
+    setSystemsData(_systemsData)
+    setTasksData(_tasksData)
+  }, [allQueue])
+
   return (
     <DefaultLayout>
-      <div className='stats'>
-        <Bar options={options} data={barData} />
+      <div className='statistics'>
+        {
+          loading
+            ? <div><h5>Systems</h5><Skeleton height='400' width='800' /></div>
+            : <Bar options={options} data={systemsData} />
+        }
       </div>
-      <div className='stats'>
-        <Line options={options} data={barData} />
+      <div className='statistics'>
+      {
+          loading
+            ? <div><h5>Tasks</h5><Skeleton height='400' width='800' /></div>
+            : <Bar options={options} data={tasksData} />
+        }
       </div>
-      <div className='stats'>
-        <Doughnut data={doughnutData} />
+      <div className='statistics'>
+      {
+          loading
+            ? <Skeleton height='400' width='800' />
+            : <Line options={options} data={barDataMock} />
+      }
       </div>
-      <div className='stats'>
-        <Pie data={doughnutData} />
+      <div className='statistics'>
+      {
+          loading
+            ? <Skeleton height='400' width='800' />
+            : <Doughnut data={doughnutData} />
+      }
+      </div>
+      <div className='statistics'>
+      {
+          loading
+            ? <Skeleton height='400' width='800' />
+            : <Pie data={doughnutData} />
+      }
       </div>
 
       {/* <div>

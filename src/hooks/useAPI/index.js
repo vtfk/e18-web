@@ -1,37 +1,23 @@
 import { useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
+import { orderBy } from 'lodash'
 
 import { API } from '../../config'
 
-export default function useQueue (defaultQueue = [], defaultType = '') {
+export default function useAPI (defaultDatabase, defaultQueue = [], defaultItemsOptions = {}, top = 1000000) {
   const [_queue, setQueue] = useState(defaultQueue)
-  const [filter, setFilter] = useState(defaultType)
-
-  const sortQueue = (a, b, property) => {
-    let a1, a2, b1, b2
-    if (typeof a[property] === 'object') {
-      a1 = a[property].length
-      a2 = a[property].length
-      b1 = b[property].length
-      b2 = b[property].length
-    } else {
-      a1 = a[property][0].toLowerCase()
-      a2 = a[property][1].toLowerCase()
-      b1 = b[property][0].toLowerCase()
-      b2 = b[property][1].toLowerCase()
-    }
-
-    if (a1 < b1) return -1
-    if (a1 > b1) return 1
-    if (a1 === b1) {
-      if (a2 < b2) return -1
-      if (a2 > b2) return 1
-    }
-    return 0
-  }
+  const [itemsOptions, setItemsOptions] = useState(defaultItemsOptions)
+  const [database] = useState(defaultDatabase === 'queue' ? 'jobs' : defaultDatabase === 'statistics' ? 'statistics' : '')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const getQueue = async () => {
+      if (!database) {
+        console.log('Database not set yet')
+        return
+      }
+
+      setLoading(true)
       try {
         const options = {
           headers: {
@@ -39,27 +25,42 @@ export default function useQueue (defaultQueue = [], defaultType = '') {
           }
         }
     
-        const { data } = await axios.get(`${API.URL}/statistics?$top=1000000`, options)
-        console.log(data.data.length)
+        const url = `${API.URL}/${database}?$top=${top}`
+        console.log('Querying', url)
+        const { data } = await axios.get(url, options)
         setQueue(data.data)
+        console.log('Query finished', data.data.length)
       } catch (error) {
         console.dir(error)
         setQueue([])
       }
+      setLoading(false)
     }
 
     getQueue()
-  }, [])
+  }, [database, top])
+
+  const options = useMemo(() => {
+    return {
+      filter: '',
+      orderBy: ['createdTimestamp'],
+      order: 'desc',
+      ...itemsOptions
+    }
+  }, [itemsOptions])
 
   const queue = useMemo(() => {
-    if (filter === '') return _queue.sort((a, b) => sortQueue(a, b, 'system'))
+    if (options.filter === '') return orderBy(_queue, options.orderBy, options.order)
 
-    const filtered = _queue.filter(item => item.status === filter)
-    return filtered.sort((a, b) => sortQueue(a, b, 'system'))
-  }, [filter, _queue])
+    const filtered = _queue.filter(item => item.status === options.filter)
+    return orderBy(filtered, options.orderBy, options.order)
+  }, [options, _queue])
 
   return {
+    allQueue: _queue,
+    itemsOptions: options,
+    loading,
     queue,
-    setFilter
+    setItemsOptions
   }
 }

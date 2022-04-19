@@ -1,6 +1,6 @@
 @import "~@vtfk/components/src/ui/Tokens/tokens.scss";
 
-.stats {
+.queue-stats {
   min-width: 1012px;
 
   @media(max-width: 1485px) {
@@ -11,9 +11,18 @@
     }
   }
 
+  .stats-group {
+    margin-bottom: 56px;
+  }
+
   .card-type-active {
     background: $zanah;
-    border: 1px ridge black;
+
+    .card-link-text {
+      .statistics-card-text {
+        text-decoration: underline;
+      }
+    }
 
     .card-link-icon {
       svg {
@@ -24,5 +33,8 @@
 }
 
 .queue {
-  
+  .item-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
 }
