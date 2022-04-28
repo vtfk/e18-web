@@ -27,6 +27,10 @@ export function Queue () {
       onClick: () => handleSortClick(['system'])
     },
     {
+      label: 'Tasks',
+      value: 'tasks'
+    },
+    {
       label: 'Status',
       value: 'status',
       onClick: () => handleSortClick(['status'])
@@ -62,6 +66,8 @@ export function Queue () {
       item._elements = {
         createdTimestamp: relativeDateFormat({ toDate: new Date(item.createdTimestamp), locale: 'no', options: {  } }),
         modifiedTimestamp: relativeDateFormat({ toDate: item.modifiedTimestamp, locale: 'no' }),
+        taskCount: item.tasks.length.toString(),
+        tasks: item.tasks.map(task => task.system).join(', '),
         actions: <div className='item-actions'>
           <IconButton
             icon='retry'
