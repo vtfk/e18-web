@@ -1,10 +1,8 @@
 import { relativeDateFormat } from '@vtfk/utilities'
-
 import React, { useMemo, useState } from 'react'
-
-import { StatisticsGroup, StatisticsCard, Table, IconButton } from '@vtfk/components'
-
+import { Dialog, DialogBody, DialogTitle, Heading3, IconButton, StatisticsGroup, StatisticsCard, Table, DialogActions } from '@vtfk/components'
 import { isEqual } from 'lodash'
+import SyntaxHighlighter from 'react-syntax-highlighter'
 
 import { DefaultLayout } from '../../layouts/Default'
 
@@ -19,6 +17,7 @@ export function Queue () {
   const [failed, setFailed] = useState(0)
   const [retired, setRetired] = useState(0)
   const [suspended, setSuspended] = useState(0)
+  const [dialogItemIndex, setDialogItemIndex] = useState(-1)
 
   const headers = [
     {
@@ -62,7 +61,7 @@ export function Queue () {
     setRetired(allQueue.filter(item => item.status === 'retired').length)
     setSuspended(allQueue.filter(item => item.status === 'suspended').length)
 
-    return queue.map(item => {
+    return queue.map((item, index) => {
       item._elements = {
         createdTimestamp: relativeDateFormat({ toDate: new Date(item.createdTimestamp), locale: 'no', options: {  } }),
         modifiedTimestamp: relativeDateFormat({ toDate: item.modifiedTimestamp, locale: 'no' }),
@@ -81,6 +80,10 @@ export function Queue () {
             icon='close'
             onClick={() => handleActionClick('retire', item._id)}
             title='Retire' />
+          <IconButton
+            icon='edit'
+            onClick={() => setDialogItemIndex(index)}
+            title='Pjaff' />
         </div>
       }
 
@@ -110,6 +113,25 @@ export function Queue () {
     }
   }
 
+  function getDialogBackground () {
+    let color
+    if (queueItems[dialogItemIndex].status === 'failed') {
+      color = '#FF0000'
+    }
+    if (queueItems[dialogItemIndex].status === 'retired') {
+      color = '#FFFF33'
+    }
+    if (queueItems[dialogItemIndex].status === 'suspended') {
+      color = '#FFFF33'
+    }
+    if (queueItems[dialogItemIndex].status === 'completed') {
+      color = '#00FF33'
+    }
+
+    console.log('Dialog status is', queueItems[dialogItemIndex].status, '-- Using color', color)
+    return color
+  }
+
   return (
     <DefaultLayout>
       
@@ -127,6 +149,69 @@ export function Queue () {
           items={queueItems}
           isLoading={loading}
         />
+
+        <Dialog
+          isOpen={dialogItemIndex > -1}
+          onDismiss={() => setDialogItemIndex(-1)}
+          onClickOutside={() => setDialogItemIndex(-1)}
+          onPressEscape={() => setDialogItemIndex(-1)}
+          height='80%'
+          width='50%'>
+            {
+              dialogItemIndex > -1 &&
+                <>
+                  <DialogTitle isShowCloseButton style={{ color: `${getDialogBackground()}`, borderBottom: '1px solid black', paddingBottom: '10px' }}>
+                    <Heading3>{`${queueItems[dialogItemIndex].status}`}</Heading3>
+                  </DialogTitle>
+                  <DialogBody>
+                    <div className='dialog-item-row'>
+                      <strong>Id</strong>: {queueItems[dialogItemIndex]._id}
+                    </div>
+                    <div className='dialog-item-row'>
+                      <strong>Executed by E18</strong>: {queueItems[dialogItemIndex].e18.toString()}
+                    </div>
+                    <div className='dialog-item-row'>
+                      <strong>Run in parallel</strong>: {queueItems[dialogItemIndex].parallel.toString()}
+                    </div>
+                    <div className='dialog-item-row'>
+                      <strong>Retries</strong>: {queueItems[dialogItemIndex].retries.toString()}
+                    </div>
+                    <div className='dialog-item-row'>
+                      <strong>Status</strong>: {queueItems[dialogItemIndex].status}
+                    </div>
+                    <div className='dialog-item-row'>
+                      <strong>System</strong>: {queueItems[dialogItemIndex].system}
+                    </div>
+                    <div className='dialog-item-row'>
+                      <strong>Type</strong>: {queueItems[dialogItemIndex].type}
+                    </div>
+                    <div className='dialog-item-row'>
+                      <strong>Tags</strong>: {JSON.stringify(queueItems[dialogItemIndex].tags)}
+                    </div>
+                    <div className='dialog-item-row'>
+                      <strong>Tasks</strong>:
+                      <SyntaxHighlighter language='json' wrapLines>
+                        {JSON.stringify(queueItems[dialogItemIndex].tasks, null, 2)}
+                      </SyntaxHighlighter>
+                    </div>
+                  </DialogBody>
+                  <DialogActions style={{ justifyContent: 'center', borderTop: '1px solid black', paddingTop: '15px' }}>
+                    <IconButton
+                      icon='retry'
+                      onClick={() => handleActionClick('retry', queueItems[dialogItemIndex]._id)}
+                      title='Retry' />
+                    <IconButton
+                      icon='pause'
+                      onClick={() => handleActionClick('suspend', queueItems[dialogItemIndex]._id)}
+                      title='Suspend' />
+                    <IconButton
+                      icon='close'
+                      onClick={() => handleActionClick('retire', queueItems[dialogItemIndex]._id)}
+                      title='Retire' />
+                  </DialogActions>
+                </>
+            }
+          </Dialog>
       </div>
 
     </DefaultLayout>
