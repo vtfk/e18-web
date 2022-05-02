@@ -68,7 +68,7 @@ export function Queue () {
         createdTimestamp: relativeDateFormat({ toDate: new Date(item.createdTimestamp), locale: 'no', options: {  } }),
         modifiedTimestamp: relativeDateFormat({ toDate: item.modifiedTimestamp, locale: 'no' }),
         taskCount: item.tasks.length.toString(),
-        tasks: item.tasks.map(task => task.system).join(', '),
+        tasks: item.tasks.length > 0 ? item.tasks.map(task => task.system).join(', ') : '-',
         actions: <div className='item-actions'>
           <IconButton
             icon='retry'
@@ -124,7 +124,7 @@ export function Queue () {
       color = '#FFFF33'
     }
     if (queueItems[dialogItemIndex].status === 'suspended') {
-      color = '#FFFF33'
+      color = '#0000FF'
     }
     if (queueItems[dialogItemIndex].status === 'completed') {
       color = '#00FF33'
