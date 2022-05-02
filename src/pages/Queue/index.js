@@ -115,7 +115,7 @@ export function Queue () {
     }
   }
 
-  function getDialogBackground () {
+  function getDialogTitleColor () {
     let color
     if (queueItems[dialogItemIndex].status === 'failed') {
       color = '#FF0000'
@@ -166,7 +166,7 @@ export function Queue () {
             {
               dialogItemIndex > -1 &&
                 <>
-                  <DialogTitle isShowCloseButton style={{ color: `${getDialogBackground()}`, borderBottom: '1px solid black', paddingBottom: '10px' }}>
+                  <DialogTitle isShowCloseButton style={{ color: `${getDialogTitleColor()}`, borderBottom: '1px solid black', paddingBottom: '10px' }}>
                     <Heading3>{`${queueItems[dialogItemIndex].status}`}</Heading3>
                   </DialogTitle>
                   <DialogBody>
