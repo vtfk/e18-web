@@ -17,6 +17,7 @@ export function Queue () {
   const [failed, setFailed] = useState(0)
   const [retired, setRetired] = useState(0)
   const [suspended, setSuspended] = useState(0)
+  const [waiting, setWaiting] = useState(0)
   const [dialogItemIndex, setDialogItemIndex] = useState(-1)
 
   const headers = [
@@ -60,6 +61,7 @@ export function Queue () {
     setFailed(allQueue.filter(item => item.status === 'failed').length)
     setRetired(allQueue.filter(item => item.status === 'retired').length)
     setSuspended(allQueue.filter(item => item.status === 'suspended').length)
+    setWaiting(allQueue.filter(item => item.status === 'waiting').length)
 
     return queue.map((item, index) => {
       item._elements = {
@@ -127,6 +129,9 @@ export function Queue () {
     if (queueItems[dialogItemIndex].status === 'completed') {
       color = '#00FF33'
     }
+    if (queueItems[dialogItemIndex].status === 'waiting') {
+      color = '#000000'
+    }
 
     console.log('Dialog status is', queueItems[dialogItemIndex].status, '-- Using color', color)
     return color
@@ -138,6 +143,7 @@ export function Queue () {
       <div className='queue-stats'>
         <StatisticsGroup className='stats-group'>
           <StatisticsCard className={`${type === 'completed' ? 'card-type-active' : ''}`} title='completed' onClick={() => handleStatsClick('completed')} value={completed} loading={loading} />
+          <StatisticsCard className={`${type === 'waiting' ? 'card-type-active' : ''}`} title='waiting' onClick={() => handleStatsClick('waiting')} value={waiting} loading={loading} />
           <StatisticsCard className={`${type === 'failed' ? 'card-type-active' : ''}`} title='failed' onClick={() => handleStatsClick('failed')} value={failed} loading={loading} />
           <StatisticsCard className={`${type === 'retired' ? 'card-type-active' : ''}`} title='retired' onClick={() => handleStatsClick('retired')} value={retired} loading={loading} />
           <StatisticsCard className={`${type === 'suspended' ? 'card-type-active' : ''}`} title='suspended' onClick={() => handleStatsClick('suspended')} value={suspended} loading={loading} />
