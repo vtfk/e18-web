@@ -1,5 +1,5 @@
 import { relativeDateFormat } from '@vtfk/utilities'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Dialog, DialogBody, DialogTitle, Heading3, IconButton, StatisticsGroup, StatisticsCard, Table, DialogActions } from '@vtfk/components'
 import { isEqual } from 'lodash'
 import SyntaxHighlighter from 'react-syntax-highlighter'
@@ -11,7 +11,8 @@ import useAPI from '../../hooks/useAPI'
 import './styles.scss'
 
 export function Queue () {
-  const [type, setType] = useState('')
+  const [types, setTypes] = useState([])
+  const [mulitpleTypes, setMulitpleTypes] = useState(false)
   const { allQueue, queue, itemsOptions, loading, setItemsOptions } = useAPI('queue')
   const [completed, setCompleted] = useState(0)
   const [failed, setFailed] = useState(0)
@@ -55,6 +56,28 @@ export function Queue () {
       value: 'actions'
     }
   ]
+
+  useEffect(() => {
+    const handleKeyUp = e => {
+      if (e.key === 'Shift') {
+        setMulitpleTypes(false)
+      }
+    }
+
+    const handleKeyDown = e => {
+      if (e.key === 'Shift') {
+        setMulitpleTypes(true)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('keyup', handleKeyUp)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('keyup', handleKeyUp)
+    }
+  }, [])
 
   const queueItems = useMemo(() => {
     setCompleted(allQueue.filter(item => item.status === 'completed').length)
@@ -106,13 +129,22 @@ export function Queue () {
   }
 
   function handleStatsClick (item) {
-    if (item === type) {
-      setType('')
-      setItemsOptions({ ...itemsOptions, filter: item === itemsOptions.filter ? '' : item})
+    let _types = [ ...types ]
+
+    if (!mulitpleTypes) {
+      if (types.length === 1 && types[0] === item) {
+        _types = []
+      } else {
+        _types = [item]
+      }
     } else {
-      setType(item)
-      setItemsOptions({ ...itemsOptions, filter: item })
+      if (!_types.includes(item)) {
+        _types.push(item)
+      }
     }
+
+    setTypes(_types)
+    setItemsOptions({ ...itemsOptions, filter: _types })
   }
 
   function getDialogTitleColor () {
@@ -142,11 +174,11 @@ export function Queue () {
       
       <div className='queue-stats'>
         <StatisticsGroup className='stats-group'>
-          <StatisticsCard className={`${type === 'completed' ? 'card-type-active' : ''}`} title='completed' onClick={() => handleStatsClick('completed')} value={completed} loading={loading} />
-          <StatisticsCard className={`${type === 'waiting' ? 'card-type-active' : ''}`} title='waiting' onClick={() => handleStatsClick('waiting')} value={waiting} loading={loading} />
-          <StatisticsCard className={`${type === 'failed' ? 'card-type-active' : ''}`} title='failed' onClick={() => handleStatsClick('failed')} value={failed} loading={loading} />
-          <StatisticsCard className={`${type === 'retired' ? 'card-type-active' : ''}`} title='retired' onClick={() => handleStatsClick('retired')} value={retired} loading={loading} />
-          <StatisticsCard className={`${type === 'suspended' ? 'card-type-active' : ''}`} title='suspended' onClick={() => handleStatsClick('suspended')} value={suspended} loading={loading} />
+          <StatisticsCard className={`${types.includes('completed') ? 'card-type-active' : ''}`} title='completed' onClick={() => handleStatsClick('completed')} value={completed} loading={loading} />
+          <StatisticsCard className={`${types.includes('waiting') ? 'card-type-active' : ''}`} title='waiting' onClick={() => handleStatsClick('waiting')} value={waiting} loading={loading} />
+          <StatisticsCard className={`${types.includes('failed') ? 'card-type-active' : ''}`} title='failed' onClick={() => handleStatsClick('failed')} value={failed} loading={loading} />
+          <StatisticsCard className={`${types.includes('retired') ? 'card-type-active' : ''}`} title='retired' onClick={() => handleStatsClick('retired')} value={retired} loading={loading} />
+          <StatisticsCard className={`${types.includes('suspended') ? 'card-type-active' : ''}`} title='suspended' onClick={() => handleStatsClick('suspended')} value={suspended} loading={loading} />
         </StatisticsGroup>
       </div>
       <div className='queue'>
