@@ -229,6 +229,12 @@ Current retries: ${item.retries.toString()}`} />
                       <strong>Tags</strong>: {JSON.stringify(queueItems[dialogItemIndex].tags)}
                     </div>
                     <div className='dialog-item-row'>
+                      <strong>Created</strong>: {queueItems[dialogItemIndex].createdTimestamp}
+                    </div>
+                    <div className='dialog-item-row'>
+                      <strong>Modified</strong>: {queueItems[dialogItemIndex].modifiedTimestamp}
+                    </div>
+                    <div className='dialog-item-row'>
                       <strong>Tasks</strong>:
                       <SyntaxHighlighter language='json' wrapLines>
                         {JSON.stringify(queueItems[dialogItemIndex].tasks, null, 2)}
