@@ -6,7 +6,7 @@
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "12.1.5",
     "@testing-library/user-event": "13.5.0",
-    "@vtfk/components": "^0.8.1",
+    "@vtfk/components": "0.9.0",
     "@vtfk/utilities": "1.4.0",
     "axios": "0.26.1",
     "chart.js": "3.7.1",
