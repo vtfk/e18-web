@@ -29,7 +29,8 @@ export function Queue () {
     },
     {
       label: 'Tasks',
-      value: 'tasks'
+      value: 'tasks',
+      itemRender: (value, item, header, index) => <div>{item.tasks.length > 0 ? item.tasks.map(task => task.system).join(', ') : '-'}</div>
     },
     {
       label: 'Status',
@@ -39,21 +40,49 @@ export function Queue () {
     {
       label: 'Task count',
       value: 'taskCount',
-      onClick: () => handleSortClick(['taskCount'])
+      onClick: () => handleSortClick(['taskCount']),
+      itemRender: (value, item, header, index) => <div>{item.tasks.length.toString()}</div>
     },
     {
       label: 'Created',
       value: 'createdTimestamp',
-      onClick: () => handleSortClick(['createdTimestamp'])
+      onClick: () => handleSortClick(['createdTimestamp']),
+      itemTooltip: 'createdTimestamp',
+      itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: new Date(item.createdTimestamp), locale: 'no', options: {  } })}</div>
     },
     {
       label: 'Modified',
       value: 'modifiedTimestamp',
-      onClick: () => handleSortClick(['modifiedTimestamp'])
+      onClick: () => handleSortClick(['modifiedTimestamp']),
+      itemTooltip: 'createdTimestamp',
+      itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: item.modifiedTimestamp, locale: 'no' })}</div>
     },
     {
       label: 'Actions',
-      value: 'actions'
+      value: 'actions',
+      itemRender: (value, item, header, index) => {
+        return (
+          <div className='item-actions'>
+            <IconButton
+              icon='retry'
+              onClick={() => handleActionClick('retry', item._id)}
+              title={`        Retry
+Current retries: ${item.retries.toString()}`} />
+            <IconButton
+              icon='pause'
+              onClick={() => handleActionClick('suspend', item._id)}
+              title='Suspend' />
+            <IconButton
+              icon='close'
+              onClick={() => handleActionClick('retire', item._id)}
+              title='Retire' />
+            <IconButton
+              icon='edit'
+              onClick={() => { setDialogItemIndex(index); console.log(index, 'set') }}
+              title='Pjaff' />
+          </div>
+        )
+      }
     }
   ]
 
@@ -86,34 +115,7 @@ export function Queue () {
     setSuspended(allQueue.filter(item => item.status === 'suspended').length)
     setWaiting(allQueue.filter(item => item.status === 'waiting').length)
 
-    return queue.map((item, index) => {
-      item._elements = {
-        createdTimestamp: relativeDateFormat({ toDate: new Date(item.createdTimestamp), locale: 'no', options: {  } }),
-        modifiedTimestamp: relativeDateFormat({ toDate: item.modifiedTimestamp, locale: 'no' }),
-        taskCount: item.tasks.length.toString(),
-        tasks: item.tasks.length > 0 ? item.tasks.map(task => task.system).join(', ') : '-',
-        actions: <div className='item-actions'>
-          <IconButton
-            icon='retry'
-            onClick={() => handleActionClick('retry', item._id)}
-            title='Retry' />
-          <IconButton
-            icon='pause'
-            onClick={() => handleActionClick('suspend', item._id)}
-            title='Suspend' />
-          <IconButton
-            icon='close'
-            onClick={() => handleActionClick('retire', item._id)}
-            title='Retire' />
-          <IconButton
-            icon='edit'
-            onClick={() => setDialogItemIndex(index)}
-            title='Pjaff' />
-        </div>
-      }
-
-      return item
-    })
+    return queue
   }, [allQueue, queue])
 
   const handleActionClick = (action, id) => {
