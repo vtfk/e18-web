@@ -21,6 +21,36 @@ export function Queue () {
   const [waiting, setWaiting] = useState(0)
   const [dialogItemIndex, setDialogItemIndex] = useState(-1)
 
+  const generateActionButtons = (item, index, view = true) => {
+    return (
+      <div className='item-actions'>
+        <IconButton
+          icon='retry'
+          disabled={['completed', 'waiting', 'suspended', 'retired'].includes(item.status)}
+          onClick={() => handleActionClick('retry', item)}
+          title={!view ? 'Retry' : `        Retry
+Current retries: ${item.retries.toString()}`} />
+        <IconButton
+          icon='pause'
+          disabled={['completed', 'retired'].includes(item.status)}
+          onClick={() => handleActionClick('suspend', item)}
+          title='Suspend' />
+        <IconButton
+          icon='close'
+          disabled={['completed', 'retired'].includes(item.status)}
+          onClick={() => handleActionClick('retire', item)}
+          title='Retire' />
+        {
+          view &&
+            <IconButton
+              icon='activity'
+              onClick={() => { setDialogItemIndex(index); console.log(index, 'set') }}
+              title='View' />
+        }
+      </div>
+    )
+  }
+
   const headers = [
     {
       label: 'System',
@@ -60,29 +90,7 @@ export function Queue () {
     {
       label: 'Actions',
       value: 'actions',
-      itemRender: (value, item, header, index) => {
-        return (
-          <div className='item-actions'>
-            <IconButton
-              icon='retry'
-              onClick={() => handleActionClick('retry', item._id)}
-              title={`        Retry
-Current retries: ${item.retries.toString()}`} />
-            <IconButton
-              icon='pause'
-              onClick={() => handleActionClick('suspend', item._id)}
-              title='Suspend' />
-            <IconButton
-              icon='close'
-              onClick={() => handleActionClick('retire', item._id)}
-              title='Retire' />
-            <IconButton
-              icon='edit'
-              onClick={() => { setDialogItemIndex(index); console.log(index, 'set') }}
-              title='Pjaff' />
-          </div>
-        )
-      }
+      itemRender: (value, item, header, index) => generateActionButtons(item, index)
     }
   ]
 
@@ -118,8 +126,8 @@ Current retries: ${item.retries.toString()}`} />
     return queue
   }, [allQueue, queue])
 
-  const handleActionClick = (action, id) => {
-    console.log(action, 'clicked on', id)
+  const handleActionClick = async (action, item) => {
+    console.log(action, 'clicked on', item._id)
   }
 
   function handleSortClick (properties) {
@@ -242,18 +250,9 @@ Current retries: ${item.retries.toString()}`} />
                     </div>
                   </DialogBody>
                   <DialogActions style={{ justifyContent: 'center', borderTop: '1px solid black', paddingTop: '15px' }}>
-                    <IconButton
-                      icon='retry'
-                      onClick={() => handleActionClick('retry', queueItems[dialogItemIndex]._id)}
-                      title='Retry' />
-                    <IconButton
-                      icon='pause'
-                      onClick={() => handleActionClick('suspend', queueItems[dialogItemIndex]._id)}
-                      title='Suspend' />
-                    <IconButton
-                      icon='close'
-                      onClick={() => handleActionClick('retire', queueItems[dialogItemIndex]._id)}
-                      title='Retire' />
+                    {
+                      generateActionButtons(queueItems[dialogItemIndex], dialogItemIndex, false)
+                    }
                   </DialogActions>
                 </>
             }
