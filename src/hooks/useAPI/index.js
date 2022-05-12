@@ -56,11 +56,34 @@ export default function useAPI (defaultDatabase, defaultQueue = [], defaultItems
     return orderBy(filtered, options.orderBy, options.order)
   }, [options, _queue])
 
+  const updateQueueItem = async (id, updateObject) => {
+    const options = {
+      headers: {
+        'X-API-KEY': API.TOKEN
+      }
+    }
+
+    try {
+      const { data } = await axios.put(`${API.URL}/jobs/${id}`, updateObject, options)
+      const tempQueue = _queue.map(q => {
+        if (q._id === data._id) {
+          q = data
+        }
+        return q
+      })
+      setQueue(tempQueue)
+      return data
+    } catch (error) {
+      console.log('I shit on me:', error)
+    }
+  }
+
   return {
     allQueue: _queue,
     itemsOptions: options,
     loading,
     queue,
-    setItemsOptions
+    setItemsOptions,
+    updateQueueItem
   }
 }

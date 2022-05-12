@@ -13,7 +13,7 @@ import './styles.scss'
 export function Queue () {
   const [types, setTypes] = useState([])
   const [mulitpleTypes, setMulitpleTypes] = useState(false)
-  const { allQueue, queue, itemsOptions, loading, setItemsOptions } = useAPI('queue')
+  const { allQueue, queue, itemsOptions, loading, setItemsOptions, updateQueueItem } = useAPI('queue')
   const [completed, setCompleted] = useState(0)
   const [failed, setFailed] = useState(0)
   const [retired, setRetired] = useState(0)
@@ -31,10 +31,10 @@ export function Queue () {
           title={!view ? 'Retry' : `        Retry
 Current retries: ${item.retries.toString()}`} />
         <IconButton
-          icon='pause'
+          icon={item.status === 'suspended' ? 'play' : 'pause'}
           disabled={['completed', 'retired'].includes(item.status)}
-          onClick={() => handleActionClick('suspend', item)}
-          title='Suspend' />
+          onClick={() => handleActionClick(item.status === 'suspended' ? 'unsuspend' : 'suspend', item)}
+          title={item.status === 'suspended' ? 'Unsuspend': 'Suspend'} />
         <IconButton
           icon='close'
           disabled={['completed', 'retired'].includes(item.status)}
@@ -44,7 +44,7 @@ Current retries: ${item.retries.toString()}`} />
           view &&
             <IconButton
               icon='activity'
-              onClick={() => { setDialogItemIndex(index); console.log(index, 'set') }}
+              onClick={() => setDialogItemIndex(index)}
               title='View' />
         }
       </div>
@@ -77,15 +77,15 @@ Current retries: ${item.retries.toString()}`} />
       label: 'Created',
       value: 'createdTimestamp',
       onClick: () => handleSortClick(['createdTimestamp']),
-      itemTooltip: 'createdTimestamp',
-      itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: new Date(item.createdTimestamp), locale: 'no', options: {  } })}</div>
+      itemTooltip: 'createdAt',
+      itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: new Date(item.createdAt || item.createdTimestamp), locale: 'no', options: {  } })}</div>
     },
     {
       label: 'Modified',
       value: 'modifiedTimestamp',
       onClick: () => handleSortClick(['modifiedTimestamp']),
-      itemTooltip: 'createdTimestamp',
-      itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: item.modifiedTimestamp, locale: 'no' })}</div>
+      itemTooltip: 'updatedAt',
+      itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: item.updatedAt || item.modifiedTimestamp, locale: 'no' })}</div>
     },
     {
       label: 'Actions',
@@ -127,7 +127,20 @@ Current retries: ${item.retries.toString()}`} />
   }, [allQueue, queue])
 
   const handleActionClick = async (action, item) => {
-    console.log(action, 'clicked on', item._id)
+    const updatePayload = {}
+    if (['retry', 'unsuspend'].includes(action)) {
+      updatePayload.status = 'waiting'
+    } else if (action === 'suspend') {
+      updatePayload.status = 'suspended'
+    } else if (action === 'retire') {
+      updatePayload.status = 'retired'
+    } else {
+      console.log('WHHAAATT? A new action? :O', action)
+      return
+    }
+
+    const result = await updateQueueItem(item._id, updatePayload)
+    console.log('Finished update', result)
   }
 
   function handleSortClick (properties) {
@@ -175,7 +188,6 @@ Current retries: ${item.retries.toString()}`} />
       color = '#000000'
     }
 
-    console.log('Dialog status is', queueItems[dialogItemIndex].status, '-- Using color', color)
     return color
   }
 
@@ -237,10 +249,10 @@ Current retries: ${item.retries.toString()}`} />
                       <strong>Tags</strong>: {JSON.stringify(queueItems[dialogItemIndex].tags)}
                     </div>
                     <div className='dialog-item-row'>
-                      <strong>Created</strong>: {queueItems[dialogItemIndex].createdTimestamp}
+                      <strong>Created</strong>: {queueItems[dialogItemIndex].createdAt || queueItems[dialogItemIndex].createdTimestamp}
                     </div>
                     <div className='dialog-item-row'>
-                      <strong>Modified</strong>: {queueItems[dialogItemIndex].modifiedTimestamp}
+                      <strong>Modified</strong>: {queueItems[dialogItemIndex].updatedAt || queueItems[dialogItemIndex].modifiedTimestamp}
                     </div>
                     <div className='dialog-item-row'>
                       <strong>Tasks</strong>:
