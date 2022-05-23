@@ -27,6 +27,7 @@ export function Queue () {
         <IconButton
           icon='retry'
           disabled={['completed', 'waiting', 'suspended', 'retired', 'running'].includes(item.status) || item.e18 === false}
+          title={item.status === 'failed' && item.e18 === true ? 'Retry' : item.status !== 'failed' ? 'Can only retry a "failed" task' : item.e18 === false ? 'Can only retry a task handled by E18' : 'Retry'} />
         <IconButton
           icon={item.status === 'suspended' ? 'play' : 'pause'}
           disabled={['completed', 'retired'].includes(item.status)}
