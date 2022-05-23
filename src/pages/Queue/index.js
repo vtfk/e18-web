@@ -26,10 +26,7 @@ export function Queue () {
       <div className='item-actions'>
         <IconButton
           icon='retry'
-          disabled={['completed', 'waiting', 'suspended', 'retired'].includes(item.status)}
-          onClick={() => handleActionClick('retry', item)}
-          title={!view ? 'Retry' : `        Retry
-Current retries: ${item.retries.toString()}`} />
+          disabled={['completed', 'waiting', 'suspended', 'retired', 'running'].includes(item.status) || item.e18 === false}
         <IconButton
           icon={item.status === 'suspended' ? 'play' : 'pause'}
           disabled={['completed', 'retired'].includes(item.status)}
