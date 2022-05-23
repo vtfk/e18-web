@@ -1,10 +1,12 @@
 import { relativeDateFormat } from '@vtfk/utilities'
 import React, { useEffect, useMemo, useState } from 'react'
-import { Dialog, DialogBody, DialogTitle, Heading3, IconButton, StatisticsGroup, StatisticsCard, Table, DialogActions } from '@vtfk/components'
+import { Dialog, DialogBody, DialogTitle, Heading3, IconButton, StatisticsGroup, StatisticsCard, Table, DialogActions, TextField } from '@vtfk/components'
 import { isEqual } from 'lodash'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 
 import { DefaultLayout } from '../../layouts/Default'
+
+import ConfirmationDialog from '../../components/ConfirmationDialog'
 
 import useAPI from '../../hooks/useAPI'
 
@@ -13,13 +15,14 @@ import './styles.scss'
 export function Queue () {
   const [types, setTypes] = useState([])
   const [mulitpleTypes, setMulitpleTypes] = useState(false)
-  const { allQueue, queue, itemsOptions, loading, setItemsOptions, updateQueueItem } = useAPI('queue')
+  const { allQueue, queue, itemsOptions, loading, setItemsOptions, updateQueueItem, updating } = useAPI('queue')
   const [completed, setCompleted] = useState(0)
   const [failed, setFailed] = useState(0)
   const [retired, setRetired] = useState(0)
   const [suspended, setSuspended] = useState(0)
   const [waiting, setWaiting] = useState(0)
   const [dialogItemIndex, setDialogItemIndex] = useState(-1)
+  const [confirmationItem, setConfirmationItem] = useState({})
 
   const generateActionButtons = (item, index, view = true) => {
     return (
@@ -27,16 +30,17 @@ export function Queue () {
         <IconButton
           icon='retry'
           disabled={['completed', 'waiting', 'suspended', 'retired', 'running'].includes(item.status) || item.e18 === false}
+          onClick={() => setConfirmationItem({ action: 'retry', item, index, message: 'Status satt til retry' })} //handleActionClick('retry', item, index)}
           title={item.status === 'failed' && item.e18 === true ? 'Retry' : item.status !== 'failed' ? 'Can only retry a "failed" task' : item.e18 === false ? 'Can only retry a task handled by E18' : 'Retry'} />
         <IconButton
           icon={item.status === 'suspended' ? 'play' : 'pause'}
           disabled={['completed', 'retired'].includes(item.status)}
-          onClick={() => handleActionClick(item.status === 'suspended' ? 'unsuspend' : 'suspend', item)}
+          onClick={() => setConfirmationItem({ action: item.status === 'suspended' ? 'unsuspend' : 'suspend', item, index, message: `Status satt til ${item.status === 'suspended' ? 'waiting' : 'suspend'}` })} //handleActionClick(item.status === 'suspended' ? 'unsuspend' : 'suspend', item, index)}
           title={item.status === 'suspended' ? 'Unsuspend': 'Suspend'} />
         <IconButton
           icon='close'
           disabled={['completed', 'retired'].includes(item.status)}
-          onClick={() => handleActionClick('retire', item)}
+          onClick={() => setConfirmationItem({ action: 'retire', item, index, message: 'Status satt til retire' })} //handleActionClick('retire', item, index)}
           title='Retire' />
         {
           view &&
@@ -124,8 +128,13 @@ export function Queue () {
     return queue
   }, [allQueue, queue])
 
-  const handleActionClick = async (action, item) => {
-    const updatePayload = {}
+  const handleActionClick = async (action, item, message) => {
+    const updatePayload = {
+      comment: {
+        message,
+        user: 'noen.andre@vtfk.no' // TODO: Endres til pålogget bruker
+      }
+    }
     if (['retry', 'unsuspend'].includes(action)) {
       updatePayload.status = 'waiting'
     } else if (action === 'suspend') {
@@ -139,6 +148,8 @@ export function Queue () {
 
     const result = await updateQueueItem(item._id, updatePayload)
     console.log('Finished update', result)
+
+    setConfirmationItem({})
   }
 
   function handleSortClick (properties) {
@@ -267,21 +278,74 @@ export function Queue () {
                           </ul>
                       }
                     </div>
+                    <div className='dialog-item-row'>
                       <strong>Tasks</strong>:
                       <SyntaxHighlighter language='json' wrapLines>
                         {JSON.stringify(queueItems[dialogItemIndex].tasks, null, 2)}
                       </SyntaxHighlighter>
                     </div>
                   </DialogBody>
-                  <DialogActions style={{ justifyContent: 'center', borderTop: '1px solid black', paddingTop: '15px' }}>
-                    {
-                      generateActionButtons(queueItems[dialogItemIndex], dialogItemIndex, false)
-                    }
+                  <DialogActions style={{ display: 'inline-block', borderTop: '1px solid black', paddingTop: '15px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <IconButton
+                          disabled={dialogItemIndex === 0}
+                          icon='arrowLeft'
+                          onClick={() => { setDialogItemIndex(dialogItemIndex - 1); console.log('Heyhey', dialogItemIndex - 1) }}
+                          title='Forrige' />
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
+                        {
+                          generateActionButtons(queueItems[dialogItemIndex], dialogItemIndex, false)
+                        }
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <IconButton
+                          disabled={dialogItemIndex === (queueItems.length - 1)}
+                          icon='arrowRight'
+                          onClick={() => { setDialogItemIndex(dialogItemIndex + 1); console.log('Heyhey', dialogItemIndex + 1) }}
+                          title='Neste' />
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center', height: '1.5em', paddingTop: '0.5em' }}>
+                      <b>{dialogItemIndex + 1} / {queueItems.length}</b>
+                    </div>
                   </DialogActions>
                 </>
             }
           </Dialog>
       </div>
+
+      {
+        Object.keys(confirmationItem).length > 0 &&
+          <ConfirmationDialog
+            open
+            title={<span>Vil du sette status til <b>{confirmationItem.action}</b> ?</span>}
+            okBtnText='Yes siree'
+            cancelBtnText='Hell no'
+            okBtnDisabled={updating}
+            onClickCancel={() => setConfirmationItem({})}
+            onClickOk={() => handleActionClick(confirmationItem.action, confirmationItem.item, confirmationItem.message)}
+            onDismiss={() => setConfirmationItem({})}
+          >
+            {
+              !updating &&
+                <div>
+                  <TextField
+                    placeholder='Beskjeden som skal legges til'
+                    rows={5}
+                    onChange={e => { console.log(e.target.value); setConfirmationItem({ ...confirmationItem, message: e.target.value }) }}
+                    value={confirmationItem.message} />
+                </div>
+            }
+            
+            {
+              updating &&
+                <span>Jeg OPPDATERER!</span>
+            }
+
+          </ConfirmationDialog>
+      }
 
     </DefaultLayout>
   )

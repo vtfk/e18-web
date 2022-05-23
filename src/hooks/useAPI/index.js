@@ -9,6 +9,7 @@ export default function useAPI (defaultDatabase, defaultQueue = [], defaultItems
   const [itemsOptions, setItemsOptions] = useState(defaultItemsOptions)
   const [database] = useState(defaultDatabase === 'queue' ? 'jobs' : defaultDatabase === 'statistics' ? 'statistics' : '')
   const [loading, setLoading] = useState(false)
+  const [updating, setUpdating] = useState(false)
 
   useEffect(() => {
     const getQueue = async () => {
@@ -64,6 +65,7 @@ export default function useAPI (defaultDatabase, defaultQueue = [], defaultItems
     }
 
     try {
+      setUpdating(true)
       const { data } = await axios.put(`${API.URL}/jobs/${id}`, updateObject, options)
       const tempQueue = _queue.map(q => {
         if (q._id === data._id) {
@@ -72,9 +74,11 @@ export default function useAPI (defaultDatabase, defaultQueue = [], defaultItems
         return q
       })
       setQueue(tempQueue)
+      setUpdating(false)
       return data
     } catch (error) {
       console.log('I shit on me:', error)
+      setUpdating(false)
     }
   }
 
@@ -84,6 +88,7 @@ export default function useAPI (defaultDatabase, defaultQueue = [], defaultItems
     loading,
     queue,
     setItemsOptions,
-    updateQueueItem
+    updateQueueItem,
+    updating
   }
 }
