@@ -253,6 +253,20 @@ export function Queue () {
                       <strong>Modified</strong>: {queueItems[dialogItemIndex].updatedAt || queueItems[dialogItemIndex].modifiedTimestamp}
                     </div>
                     <div className='dialog-item-row'>
+                      <strong>Comments</strong>:
+                      {
+                        queueItems[dialogItemIndex].comments?.length > 0 &&
+                          <ul>
+                            {
+                              queueItems[dialogItemIndex].comments.map((comment, index) => {
+                                return (
+                                  <li key={index}><strong>{comment.user}</strong>: <i>{comment.message}</i></li>
+                                )
+                              }) 
+                            }
+                          </ul>
+                      }
+                    </div>
                       <strong>Tasks</strong>:
                       <SyntaxHighlighter language='json' wrapLines>
                         {JSON.stringify(queueItems[dialogItemIndex].tasks, null, 2)}
