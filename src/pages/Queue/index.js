@@ -1,6 +1,6 @@
 import { relativeDateFormat } from '@vtfk/utilities'
 import React, { useEffect, useMemo, useState } from 'react'
-import { Dialog, DialogBody, DialogTitle, Heading3, IconButton, StatisticsGroup, StatisticsCard, Table, DialogActions, TextField } from '@vtfk/components'
+import { Dialog, DialogBody, DialogTitle, Heading3, IconButton, StatisticsGroup, StatisticsCard, Table, DialogActions, TextField, ErrorMessage } from '@vtfk/components'
 import { isEqual } from 'lodash'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 
@@ -148,10 +148,14 @@ export function Queue () {
       return
     }
 
-    const result = await updateQueueItem(item._id, updatePayload)
-    console.log('Finished update', result)
-
-    setConfirmationItem({})
+    try {
+      await updateQueueItem(item._id, updatePayload)
+      setConfirmationItem({})
+    } catch (error) {
+      const updateFailed = error.response?.data?.message || error.message || error
+      console.log('Failed to update queue item:', updateFailed)
+      setConfirmationItem({ ...confirmationItem, updateFailed })
+    }
   }
 
   function handleSortClick (properties) {
@@ -330,23 +334,21 @@ export function Queue () {
             onClickCancel={() => setConfirmationItem({})}
             onClickOk={() => handleActionClick(confirmationItem.action, confirmationItem.item, confirmationItem.message)}
             onDismiss={() => setConfirmationItem({})}
+            height='30%'
+            width='30%'
           >
             {
-              !updating &&
-                <div>
-                  <TextField
-                    placeholder='Beskjeden som skal legges til'
-                    rows={5}
-                    onChange={e => { console.log(e.target.value); setConfirmationItem({ ...confirmationItem, message: e.target.value }) }}
-                    value={confirmationItem.message} />
-                </div>
+              confirmationItem.updateFailed &&
+                <ErrorMessage>Failed to update...</ErrorMessage>
             }
-            
-            {
-              updating &&
-                <span>Jeg OPPDATERER!</span>
-            }
-
+            <div style={{ marginTop: '15px' }}>
+              <TextField
+                disabled={updating}
+                placeholder='Message / Reason'
+                rows={5}
+                onChange={e => { console.log(e.target.value); setConfirmationItem({ ...confirmationItem, message: e.target.value }) }}
+                value={confirmationItem.message} />
+            </div>
           </ConfirmationDialog>
       }
 
