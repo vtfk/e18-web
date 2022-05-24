@@ -27,11 +27,10 @@ export default function useAPI (defaultDatabase, defaultQueue = [], defaultItems
         }
     
         const url = `${API.URL}/${database}?$top=${top}`
-        console.log('Querying', url)
         const { data } = await axios.get(url, options)
         setQueue(data.data)
-        console.log('Query finished', data.data.length)
       } catch (error) {
+        console.log('Failed to get queue')
         console.dir(error)
         setQueue([])
       }
@@ -77,8 +76,8 @@ export default function useAPI (defaultDatabase, defaultQueue = [], defaultItems
       setUpdating(false)
       return data
     } catch (error) {
-      console.log('I shit on me:', error)
       setUpdating(false)
+      throw error
     }
   }
 
