@@ -2029,10 +2029,10 @@
     "@typescript-eslint/types" "5.17.0"
     "eslint-visitor-keys" "^3.0.0"
 
-"@vtfk/components@0.9.1":
-  "integrity" "sha512-0kGr4I0L/FmLbsl91BlP6vQYx5JrYfaPiUh8IVtBNF0xtKcONbCG5XxfxzxBHs+HIQxK+vpDBunv/7UN5BiDcw=="
-  "resolved" "https://registry.npmjs.org/@vtfk/components/-/components-0.9.1.tgz"
-  "version" "0.9.1"
+"@vtfk/components@0.10.0":
+  "integrity" "sha512-4TJzyHoi57f/iyNi1s12R7F0ifIUXz3kl19b28dk/ALbPMht1qR3gR9/Tbd/gPsmkfcpuIb1WWrWNeM6YTKgsA=="
+  "resolved" "https://registry.npmjs.org/@vtfk/components/-/components-0.10.0.tgz"
+  "version" "0.10.0"
   dependencies:
     "lodash.get" "^4.4.2"
     "nanoid" "3.3.3"
