@@ -31,11 +31,11 @@ export function Queue () {
           icon='retry'
           disabled={['completed', 'waiting', 'suspended', 'retired', 'running'].includes(item.status) || item.e18 === false}
           onClick={() => setConfirmationItem({ action: 'retry', item, index, message: 'Status satt til retry' })} //handleActionClick('retry', item, index)}
-          title={item.status === 'failed' && item.e18 === true ? 'Retry' : item.status !== 'failed' ? 'Can only retry a "failed" task' : item.e18 === false ? 'Can only retry a task handled by E18' : 'Retry'} />
+          title={item.status !== 'failed' ? 'Can only retry a "failed" task' : item.e18 === false ? 'Can only retry a task handled by E18' : 'Retry'} />
         <IconButton
           icon={item.status === 'suspended' ? 'play' : 'pause'}
           disabled={['completed', 'retired'].includes(item.status)}
-          onClick={() => setConfirmationItem({ action: item.status === 'suspended' ? 'unsuspend' : 'suspend', item, index, message: `Status satt til ${item.status === 'suspended' ? 'waiting' : 'suspend'}` })} //handleActionClick(item.status === 'suspended' ? 'unsuspend' : 'suspend', item, index)}
+          onClick={() => setConfirmationItem({ action: item.status === 'suspended' ? 'unsuspended' : 'suspended', item, index, message: `Status changed to ${item.status === 'suspended' ? 'waiting' : 'suspended'}` })} //handleActionClick(item.status === 'suspended' ? 'unsuspended' : 'suspended', item, index)}
           title={item.status === 'suspended' ? 'Unsuspend': 'Suspend'} />
         <IconButton
           icon='close'
@@ -57,11 +57,13 @@ export function Queue () {
     {
       label: 'System',
       value: 'system',
+      itemTooltip: 'type',
       onClick: () => handleSortClick(['system'])
     },
     {
       label: 'Tasks',
       value: 'tasks',
+      itemTooltip: (value, item, header, index) => item.tasks.length > 0 ? item.tasks.map(task => `${task.system} -> ${task.method} (${task.status}) (${task.retries})`).join('\n') : undefined,
       itemRender: (value, item, header, index) => <div>{item.tasks.length > 0 ? item.tasks.map(task => task.system).join(', ') : '-'}</div>
     },
     {
@@ -135,9 +137,9 @@ export function Queue () {
         user: 'noen.andre@vtfk.no' // TODO: Endres til pålogget bruker
       }
     }
-    if (['retry', 'unsuspend'].includes(action)) {
+    if (['retry', 'unsuspended'].includes(action)) {
       updatePayload.status = 'waiting'
-    } else if (action === 'suspend') {
+    } else if (action === 'suspended') {
       updatePayload.status = 'suspended'
     } else if (action === 'retire') {
       updatePayload.status = 'retired'
@@ -224,6 +226,7 @@ export function Queue () {
           onDismiss={() => setDialogItemIndex(-1)}
           onClickOutside={() => setDialogItemIndex(-1)}
           onPressEscape={() => setDialogItemIndex(-1)}
+          showCloseButton
           height='80%'
           width='50%'>
             {
@@ -320,9 +323,9 @@ export function Queue () {
         Object.keys(confirmationItem).length > 0 &&
           <ConfirmationDialog
             open
-            title={<span>Vil du sette status til <b>{confirmationItem.action}</b> ?</span>}
-            okBtnText='Yes siree'
-            cancelBtnText='Hell no'
+            title={<span>Change status ?</span>}
+            okBtnText='Yes'
+            cancelBtnText='No'
             okBtnDisabled={updating}
             onClickCancel={() => setConfirmationItem({})}
             onClickOk={() => handleActionClick(confirmationItem.action, confirmationItem.item, confirmationItem.message)}
