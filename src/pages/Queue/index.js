@@ -84,6 +84,11 @@ export function Queue () {
       itemRender: (value, item, header, index) => <div>{item.tasks.length.toString()}</div>
     },
     {
+      label: 'E18',
+      onClick: () => handleSortClick(['e18']),
+      itemRender: (value, item, header, index) => <div>{item.e18.toString()}</div>
+    },
+    {
       label: 'Created',
       onClick: () => handleSortClick(['createdTimestamp']),
       itemTooltip: 'createdAt',
