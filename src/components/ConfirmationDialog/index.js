@@ -2,7 +2,7 @@ import { Button, Dialog, DialogActions, DialogBody, DialogTitle } from "@vtfk/co
 import { useCallback, useEffect, useRef } from "react";
 
 
-export default function ConfirmationDialog({ open, title, children, okBtnText, okBtnDisabled, cancelBtnText, onClickOk, onClickCancel, onDismiss }) {
+export default function ConfirmationDialog({ open, title, children, okBtnText, okBtnDisabled, cancelBtnText, onClickOk, onClickCancel, onDismiss, ...props }) {
 
   const handleOkClick = useCallback(() => {
     if(onClickOk && typeof onClickOk === 'function') onClickOk();
@@ -44,7 +44,7 @@ export default function ConfirmationDialog({ open, title, children, okBtnText, o
   return(
     <>
       <div ref={dialogRef}>
-        <Dialog isOpen={open} onDismiss={() => { if (onDismiss && typeof onDismiss === 'function') onDismiss() }}>
+        <Dialog isOpen={open} onDismiss={() => { if (onDismiss && typeof onDismiss === 'function') onDismiss() }} {...props}>
           { title && <DialogTitle>{title}</DialogTitle>}
           <DialogBody>
             {children}
