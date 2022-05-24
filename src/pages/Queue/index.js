@@ -25,23 +25,31 @@ export function Queue () {
   const [confirmationItem, setConfirmationItem] = useState({})
 
   const generateActionButtons = (item, index, view = true) => {
+    const getTitle = type => {
+      if (item.e18 === false) return `Can only ${type} a task handled by E18`
+      if (type === 'retry') return item.status !== 'failed' ? `Can't retry a ${item.status} task` : 'Retry'
+      if (type === 'suspend') return ['completed', 'retired'].includes(item.status) ? `Can't suspend a ${item.status} task` : item.status === 'suspended' ? 'Unsuspend': 'Suspend'
+      if (type === 'retire') return ['completed', 'retired'].includes(item.status) ? `Can't retire a ${item.status} task` : 'Retire'
+      return `OI 😱 (${type})`
+    }
+
     return (
       <div className='item-actions'>
         <IconButton
           icon='retry'
           disabled={['completed', 'waiting', 'suspended', 'retired', 'running'].includes(item.status) || item.e18 === false}
-          onClick={() => setConfirmationItem({ action: 'retry', item, index, message: 'Status satt til retry' })} //handleActionClick('retry', item, index)}
-          title={item.status !== 'failed' ? 'Can only retry a "failed" task' : item.e18 === false ? 'Can only retry a task handled by E18' : 'Retry'} />
+          onClick={() => setConfirmationItem({ action: 'retry', item, index, message: 'Status changed to retry' })}
+          title={getTitle('retry')} />
         <IconButton
           icon={item.status === 'suspended' ? 'play' : 'pause'}
-          disabled={['completed', 'retired'].includes(item.status)}
-          onClick={() => setConfirmationItem({ action: item.status === 'suspended' ? 'unsuspended' : 'suspended', item, index, message: `Status changed to ${item.status === 'suspended' ? 'waiting' : 'suspended'}` })} //handleActionClick(item.status === 'suspended' ? 'unsuspended' : 'suspended', item, index)}
-          title={item.status === 'suspended' ? 'Unsuspend': 'Suspend'} />
+          disabled={['completed', 'retired'].includes(item.status) || item.e18 === false}
+          onClick={() => setConfirmationItem({ action: item.status === 'suspended' ? 'unsuspended' : 'suspended', item, index, message: `Status changed to ${item.status === 'suspended' ? 'waiting' : 'suspended'}` })}
+          title={getTitle('suspend')} />
         <IconButton
           icon='close'
-          disabled={['completed', 'retired'].includes(item.status)}
-          onClick={() => setConfirmationItem({ action: 'retire', item, index, message: 'Status satt til retire' })} //handleActionClick('retire', item, index)}
-          title='Retire' />
+          disabled={['completed', 'retired'].includes(item.status) || item.e18 === false}
+          onClick={() => setConfirmationItem({ action: 'retire', item, index, message: 'Status changed to retire' })}
+          title={getTitle('retire')} />
         {
           view &&
             <IconButton
