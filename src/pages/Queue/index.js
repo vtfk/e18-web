@@ -70,7 +70,6 @@ export function Queue () {
     },
     {
       label: 'Tasks',
-      value: 'tasks',
       itemTooltip: (value, item, header, index) => item.tasks.length > 0 ? item.tasks.map(task => `${task.system} -> ${task.method} (${task.status}) (${task.retries})`).join('\n') : undefined,
       itemRender: (value, item, header, index) => <div>{item.tasks.length > 0 ? item.tasks.map(task => task.system).join(', ') : '-'}</div>
     },
@@ -81,27 +80,23 @@ export function Queue () {
     },
     {
       label: 'Task count',
-      value: 'taskCount',
       onClick: () => handleSortClick(['taskCount']),
       itemRender: (value, item, header, index) => <div>{item.tasks.length.toString()}</div>
     },
     {
       label: 'Created',
-      value: 'createdTimestamp',
       onClick: () => handleSortClick(['createdTimestamp']),
       itemTooltip: 'createdAt',
       itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: new Date(item.createdAt || item.createdTimestamp), locale: 'no', options: {  } })}</div>
     },
     {
       label: 'Modified',
-      value: 'modifiedTimestamp',
       onClick: () => handleSortClick(['modifiedTimestamp']),
       itemTooltip: 'updatedAt',
       itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: item.updatedAt || item.modifiedTimestamp, locale: 'no' })}</div>
     },
     {
       label: 'Actions',
-      value: 'actions',
       itemRender: (value, item, header, index) => generateActionButtons(item, index)
     }
   ]
