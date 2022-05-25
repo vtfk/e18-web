@@ -27,7 +27,7 @@ const labelsMock = [
   'Mars',
   'April',
   'Mai',
-  'Juni',
+  'Juni'
 ]
 
 const options = {
@@ -160,28 +160,28 @@ export function Statistics () {
         }
       </div>
       <div className='statistics'>
-      {
+        {
           loading
             ? <div><h5>Tasks</h5><Skeleton height='400' width='800' /></div>
             : <Bar options={options} data={tasksData} />
         }
       </div>
       <div className='statistics'>
-      {
+        {
           loading
             ? <Skeleton height='400' width='800' />
             : <Line options={options} data={barDataMock} />
       }
       </div>
       <div className='statistics'>
-      {
+        {
           loading
             ? <Skeleton height='400' width='800' />
             : <Doughnut data={doughnutData} />
       }
       </div>
       <div className='statistics'>
-      {
+        {
           loading
             ? <Skeleton height='400' width='800' />
             : <Pie data={doughnutData} />

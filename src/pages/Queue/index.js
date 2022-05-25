@@ -28,7 +28,7 @@ export function Queue () {
     const getTitle = type => {
       if (item.e18 === false) return `Can only ${type} a task handled by E18`
       if (type === 'retry') return item.status !== 'failed' ? `Can't retry a ${item.status} task` : 'Retry'
-      if (type === 'suspend') return ['completed', 'retired'].includes(item.status) ? `Can't suspend a ${item.status} task` : item.status === 'suspended' ? 'Unsuspend': 'Suspend'
+      if (type === 'suspend') return ['completed', 'retired'].includes(item.status) ? `Can't suspend a ${item.status} task` : item.status === 'suspended' ? 'Unsuspend' : 'Suspend'
       if (type === 'retire') return ['completed', 'retired'].includes(item.status) ? `Can't retire a ${item.status} task` : 'Retire'
       return `OI 😱 (${type})`
     }
@@ -39,23 +39,27 @@ export function Queue () {
           icon='retry'
           disabled={['completed', 'waiting', 'suspended', 'retired', 'running'].includes(item.status) || item.e18 === false}
           onClick={() => setConfirmationItem({ action: 'retry', item, index, message: 'Status changed to retry' })}
-          title={getTitle('retry')} />
+          title={getTitle('retry')}
+        />
         <IconButton
           icon={item.status === 'suspended' ? 'play' : 'pause'}
           disabled={['completed', 'retired'].includes(item.status) || item.e18 === false}
           onClick={() => setConfirmationItem({ action: item.status === 'suspended' ? 'unsuspended' : 'suspended', item, index, message: `Status changed to ${item.status === 'suspended' ? 'waiting' : 'suspended'}` })}
-          title={getTitle('suspend')} />
+          title={getTitle('suspend')}
+        />
         <IconButton
           icon='close'
           disabled={['completed', 'retired'].includes(item.status) || item.e18 === false}
           onClick={() => setConfirmationItem({ action: 'retire', item, index, message: 'Status changed to retire' })}
-          title={getTitle('retire')} />
+          title={getTitle('retire')}
+        />
         {
           view &&
             <IconButton
               icon='activity'
               onClick={() => setDialogItemIndex(index)}
-              title='View' />
+              title='View'
+            />
         }
       </div>
     )
@@ -92,7 +96,7 @@ export function Queue () {
       label: 'Created',
       onClick: () => handleSortClick(['createdTimestamp']),
       itemTooltip: 'createdAt',
-      itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: new Date(item.createdAt || item.createdTimestamp), locale: 'no', options: {  } })}</div>
+      itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: new Date(item.createdAt || item.createdTimestamp), locale: 'no', options: { } })}</div>
     },
     {
       label: 'Modified',
@@ -175,7 +179,7 @@ export function Queue () {
   }
 
   function handleStatsClick (item) {
-    let _types = [ ...types ]
+    let _types = [...types]
 
     if (!mulitpleTypes) {
       if (types.length === 1 && types[0] === item) {
@@ -216,7 +220,7 @@ export function Queue () {
 
   return (
     <DefaultLayout>
-      
+
       <div className='queue-stats'>
         <StatisticsGroup className='stats-group'>
           <StatisticsCard className={`${types.includes('completed') ? 'card-type-active' : ''}`} title='completed' onClick={() => handleStatsClick('completed')} value={completed} loading={loading} />
@@ -240,8 +244,9 @@ export function Queue () {
           onPressEscape={() => setDialogItemIndex(-1)}
           showCloseButton
           height='80%'
-          width='50%'>
-            {
+          width='50%'
+        >
+          {
               dialogItemIndex > -1 &&
                 <>
                   <DialogTitle isShowCloseButton style={{ color: `${getDialogTitleColor()}`, borderBottom: '1px solid black', paddingBottom: '10px' }}>
@@ -288,7 +293,7 @@ export function Queue () {
                                 return (
                                   <li key={index}><strong>{comment.user}</strong>: <i>{comment.message}</i></li>
                                 )
-                              }) 
+                              })
                             }
                           </ul>
                       }
@@ -307,7 +312,8 @@ export function Queue () {
                           disabled={dialogItemIndex === 0}
                           icon='arrowLeft'
                           onClick={() => { setDialogItemIndex(dialogItemIndex - 1); console.log('Heyhey', dialogItemIndex - 1) }}
-                          title='Forrige' />
+                          title='Forrige'
+                        />
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
                         {
@@ -319,7 +325,8 @@ export function Queue () {
                           disabled={dialogItemIndex === (queueItems.length - 1)}
                           icon='arrowRight'
                           onClick={() => { setDialogItemIndex(dialogItemIndex + 1); console.log('Heyhey', dialogItemIndex + 1) }}
-                          title='Neste' />
+                          title='Neste'
+                        />
                       </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center', height: '1.5em', paddingTop: '0.5em' }}>
@@ -328,7 +335,7 @@ export function Queue () {
                   </DialogActions>
                 </>
             }
-          </Dialog>
+        </Dialog>
       </div>
 
       {
@@ -355,7 +362,8 @@ export function Queue () {
                 placeholder='Message / Reason'
                 rows={5}
                 onChange={e => { console.log(e.target.value); setConfirmationItem({ ...confirmationItem, message: e.target.value }) }}
-                value={confirmationItem.message} />
+                value={confirmationItem.message}
+              />
             </div>
           </ConfirmationDialog>
       }

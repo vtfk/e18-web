@@ -25,7 +25,7 @@ export default function useAPI (defaultDatabase, defaultQueue = [], defaultItems
             'X-API-KEY': API.TOKEN
           }
         }
-    
+
         const url = `${API.URL}/${database}?$top=${top}`
         const { data } = await axios.get(url, options)
         setQueue(data.data)
