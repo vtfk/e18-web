@@ -18,6 +18,18 @@
     "jsonpointer" "^5.0.0"
     "leven" "^3.1.0"
 
+"@azure/msal-browser@2.24.0":
+  "integrity" "sha512-P4Z8mQ6hTuA9ss3HCltso7fRmuX1raaU6444G35c0FhaD6hfqViFYRa7hk16AiAs9HkUQHbBaL3gLjKMpX3heA=="
+  "resolved" "https://registry.npmjs.org/@azure/msal-browser/-/msal-browser-2.24.0.tgz"
+  "version" "2.24.0"
+  dependencies:
+    "@azure/msal-common" "^6.3.0"
+
+"@azure/msal-common@6.3.0":
+  "integrity" "sha512-ZyLq9GdnLBi/83YpysE86TFKbA0TuvfNAN5Psqu20cdAjLo/4rw4ttiItdh1G//XeGErHk9qn57gi2AYU1b5/Q=="
+  "resolved" "https://registry.npmjs.org/@azure/msal-common/-/msal-common-6.3.0.tgz"
+  "version" "6.3.0"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.16.0", "@babel/code-frame@^7.16.7", "@babel/code-frame@^7.8.3":
   "integrity" "sha512-iAXqUn8IIeBTNd72xsFlgaXHkMBMt6y4HJp1tIaK465CWLT/fG1aqB7ykr95gHHmlBdGbFeWWfyB4NJJ0nmeIg=="
   "resolved" "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.16.7.tgz"
@@ -1364,6 +1376,13 @@
   dependencies:
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
+
+"@microsoft/teams-js@2.0.0":
+  "integrity" "sha512-13Mag9MkUplbZxK1qu55r8YSNkuOpmmZuha7P8Z26ef5ZnrYm9PM3JCoWgDvBqILxWF2e1Yo/5V2Ic9yD9rU0Q=="
+  "resolved" "https://registry.npmjs.org/@microsoft/teams-js/-/teams-js-2.0.0.tgz"
+  "version" "2.0.0"
+  dependencies:
+    "debug" "4.3.3"
 
 "@nodelib/fs.scandir@2.1.5":
   "integrity" "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="
@@ -3498,6 +3517,13 @@
   "version" "2.6.9"
   dependencies:
     "ms" "2.0.0"
+
+"debug@4.3.3":
+  "integrity" "sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q=="
+  "resolved" "https://registry.npmjs.org/debug/-/debug-4.3.3.tgz"
+  "version" "4.3.3"
+  dependencies:
+    "ms" "2.1.2"
 
 "decimal.js@^10.2.1":
   "integrity" "sha512-V0pfhfr8suzyPGOx3nmq4aHqabehUZn6Ch9kyFpV79TGDTWFmHqUqXdabR7QHqxzrYolF4+tVmJhUG4OURg5dQ=="

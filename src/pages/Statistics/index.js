@@ -6,8 +6,6 @@ import { uniqBy } from 'lodash'
 
 import useAPI from '../../hooks/useAPI'
 
-import { DefaultLayout } from '../../layouts/Default'
-
 import './styles.scss'
 
 const randomData = (labels, min, max, rounded = true) => {
@@ -151,7 +149,7 @@ export function Statistics () {
   }, [allQueue])
 
   return (
-    <DefaultLayout>
+    <div className='statistics-container'>
       <div className='statistics'>
         {
           loading
@@ -205,6 +203,6 @@ export function Statistics () {
         <p>Duis convallis, risus sed fringilla ultricies, elit ipsum volutpat lorem, in pellentesque augue tellus interdum erat. Duis maximus nunc et turpis volutpat, at efficitur elit imperdiet. Nunc vel eros et dolor sollicitudin viverra. Donec dapibus, ex ac tristique aliquet, felis massa malesuada libero, at venenatis sem sem et ante. Phasellus auctor maximus mi. Integer sodales ante ac neque ornare gravida. Donec pulvinar efficitur purus nec mattis. Proin pellentesque suscipit efficitur.</p>
         <p>Sed pretium ex in risus commodo luctus. In non tempus erat. Nulla imperdiet, nunc ut aliquam mattis, elit dui facilisis leo, ut tempor magna quam nec nunc. Fusce ac magna fermentum, vulputate nunc eget, efficitur nunc. In pulvinar dolor id est vestibulum, vel laoreet sem rhoncus. Integer eget viverra magna, gravida fringilla augue. In quis odio non nisi faucibus accumsan. Etiam quis dolor libero</p>
       </div> */}
-    </DefaultLayout>
+    </div>
   )
 }

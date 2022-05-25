@@ -4,13 +4,19 @@ import { Dialog, DialogBody, DialogTitle, Heading3, IconButton, StatisticsGroup,
 import { isEqual } from 'lodash'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 
-import { DefaultLayout } from '../../layouts/Default'
-
 import ConfirmationDialog from '../../components/ConfirmationDialog'
 
 import useAPI from '../../hooks/useAPI'
 
 import './styles.scss'
+
+const defaultConfirmationItem = {
+  message: '',
+  action: '',
+  index: -1,
+  item: {},
+  updateFailed: false
+}
 
 export function Queue () {
   const [types, setTypes] = useState([])
@@ -22,7 +28,7 @@ export function Queue () {
   const [suspended, setSuspended] = useState(0)
   const [waiting, setWaiting] = useState(0)
   const [dialogItemIndex, setDialogItemIndex] = useState(-1)
-  const [confirmationItem, setConfirmationItem] = useState({})
+  const [confirmationItem, setConfirmationItem] = useState(defaultConfirmationItem)
 
   const generateActionButtons = (item, index, view = true) => {
     const getTitle = type => {
@@ -162,7 +168,7 @@ export function Queue () {
 
     try {
       await updateQueueItem(item._id, updatePayload)
-      setConfirmationItem({})
+      setConfirmationItem(defaultConfirmationItem)
     } catch (error) {
       const updateFailed = error.response?.data?.message || error.message || error
       console.log('Failed to update queue item:', updateFailed)
@@ -219,8 +225,7 @@ export function Queue () {
   }
 
   return (
-    <DefaultLayout>
-
+    <div className='queue-container'>
       <div className='queue-stats'>
         <StatisticsGroup className='stats-group'>
           <StatisticsCard className={`${types.includes('completed') ? 'card-type-active' : ''}`} title='completed' onClick={() => handleStatsClick('completed')} value={completed} loading={loading} />
@@ -311,7 +316,7 @@ export function Queue () {
                         <IconButton
                           disabled={dialogItemIndex === 0}
                           icon='arrowLeft'
-                          onClick={() => { setDialogItemIndex(dialogItemIndex - 1); console.log('Heyhey', dialogItemIndex - 1) }}
+                          onClick={() => setDialogItemIndex(dialogItemIndex - 1)}
                           title='Forrige'
                         />
                       </div>
@@ -324,7 +329,7 @@ export function Queue () {
                         <IconButton
                           disabled={dialogItemIndex === (queueItems.length - 1)}
                           icon='arrowRight'
-                          onClick={() => { setDialogItemIndex(dialogItemIndex + 1); console.log('Heyhey', dialogItemIndex + 1) }}
+                          onClick={() => setDialogItemIndex(dialogItemIndex + 1)}
                           title='Neste'
                         />
                       </div>
@@ -339,16 +344,16 @@ export function Queue () {
       </div>
 
       {
-        Object.keys(confirmationItem).length > 0 &&
+        Object.keys(confirmationItem.item).length > 0 &&
           <ConfirmationDialog
             open
             title={<span>Change status ?</span>}
             okBtnText='Yes'
             cancelBtnText='No'
             okBtnDisabled={updating}
-            onClickCancel={() => setConfirmationItem({})}
+            onClickCancel={() => setConfirmationItem(defaultConfirmationItem)}
             onClickOk={() => handleActionClick(confirmationItem.action, confirmationItem.item, confirmationItem.message)}
-            onDismiss={() => setConfirmationItem({})}
+            onDismiss={() => setConfirmationItem(defaultConfirmationItem)}
             height='30%'
             width='30%'
           >
@@ -359,15 +364,15 @@ export function Queue () {
             <div style={{ marginTop: '15px' }}>
               <TextField
                 disabled={updating}
+                onChange={e => setConfirmationItem({ ...confirmationItem, message: e.target.value })}
                 placeholder='Message / Reason'
                 rows={5}
-                onChange={e => { console.log(e.target.value); setConfirmationItem({ ...confirmationItem, message: e.target.value }) }}
                 value={confirmationItem.message}
               />
             </div>
           </ConfirmationDialog>
       }
 
-    </DefaultLayout>
+    </div>
   )
 }

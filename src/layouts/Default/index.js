@@ -1,6 +1,13 @@
-import React from 'react'
+import { Routes, Route } from 'react-router-dom'
 
 import { IconDropdownNavItem, SideNav, TopBar } from '@vtfk/components'
+
+import { getValidToken } from '../../auth'
+
+import { Queue } from '../../pages/Queue'
+import { Statistics } from '../../pages/Statistics'
+import { APIKeys } from '../../pages/APIKeys'
+import { PageNotFound } from '../../pages/PageNotFound'
 
 import './styles.scss'
 
@@ -36,30 +43,41 @@ const items = [
 
 const menuItems = [
   {
-    onClick: () => console.log('Should log off', '🤡'),
+    onClick: () => {
+      window.location.href = '/logout'
+    },
     title: 'Logg av 🤡'
   }
 ]
 
-export function DefaultLayout (props) {
+export function DefaultLayout () {
+  const token = getValidToken()
   return (
-    <div className='default-layout'>
+    <div className='app'>
+      <div className='default-layout'>
 
-      <SideNav title='E18' items={items} useMini />
+        <SideNav title='E18' items={items} useMini />
 
-      {/* Menu bar shown on screen sizes greater than 1000px */}
-      <TopBar displayName={user.displayName} firstName={user.firstName} lastName={user.lastName}>
-        {
-          menuItems.map((item, index) => {
-            return (
-              <IconDropdownNavItem key={index} onClick={item.onClick} title={item.title} closeOnClick />
-            )
-          })
-        }
-      </TopBar>
+        {/* Menu bar shown on screen sizes greater than 1000px */}
+        <TopBar displayName={token?.user?.displayName || user.displayName} firstName={token?.user?.firstName || user.firstName} lastName={token?.user?.lastName || user.lastName}>
+          {
+            menuItems.map((item, index) => {
+              return (
+                <IconDropdownNavItem key={index} onClick={() => item.onClick()} title={item.title} closeOnClick />
+              )
+            })
+          }
+        </TopBar>
 
-      <div className='container'>
-        {props.children}
+        <div className='container'>
+          <Routes>
+            <Route path='/' element={<Queue />} />
+            <Route path='/statistics' element={<Statistics />} />
+            <Route path='/apikeys' element={<APIKeys />} />
+
+            <Route path='/*' element={<PageNotFound />} />
+          </Routes>
+        </div>
       </div>
     </div>
   )

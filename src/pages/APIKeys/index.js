@@ -1,11 +1,9 @@
-import { DefaultLayout } from '../../layouts/Default'
-
 import './styles.scss'
 
 export function APIKeys () {
   return (
-    <DefaultLayout>
+    <div className='apikeys-container'>
       APIKeys
-    </DefaultLayout>
+    </div>
   )
 }

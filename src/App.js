@@ -1,24 +1,24 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import { Queue } from './pages/Queue'
-import { Statistics } from './pages/Statistics'
-import { APIKeys } from './pages/APIKeys'
-import { PageNotFound } from './pages/PageNotFound'
+import { Login } from './pages/Auth/Login'
+import { HandleLogin } from './pages/Auth/HandleLogin'
+import { LoginRedirect } from './pages/Auth/LoginRedirect'
+import { Logout } from './pages/Auth/Logout'
+import { AuthRoute } from './pages/Auth/AuthRoute'
+import { DefaultLayout } from './layouts/Default'
 
-function App() {
+function App () {
   return (
-    <Router>
-      <div className='app'>
-        <Routes>
-          <Route path='/' element={<Queue />} />
-          <Route path='/statistics' element={<Statistics />} />
-          <Route path='/apikeys' element={<APIKeys />} />
-
-          <Route path='*' element={<PageNotFound />} />
-        </Routes>
-      </div>
-    </Router>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/login' element={<Login />} />
+        <Route path='/handlelogin' element={<HandleLogin />} />
+        <Route path='/loginredirect' element={<LoginRedirect />} />
+        <Route path='/logout' element={<Logout />} />
+        <Route path='/*' element={<AuthRoute><DefaultLayout /></AuthRoute>} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
-export default App;
+export default App

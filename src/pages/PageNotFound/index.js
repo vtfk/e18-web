@@ -1,11 +1,9 @@
-import { DefaultLayout } from '../../layouts/Default'
-
 import './styles.scss'
 
 export function PageNotFound () {
   return (
-    <DefaultLayout>
+    <div className='notfound-container'>
       <img className='not-found' src='https://i.gifer.com/AVAR.gif' alt='Not found' />
-    </DefaultLayout>
+    </div>
   )
 }
