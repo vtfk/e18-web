@@ -94,13 +94,13 @@ export function Queue () {
     },
     {
       label: 'Created',
-      onClick: () => handleSortClick(['createdTimestamp']),
+      onClick: () => handleSortClick(['createdAt']),
       itemTooltip: 'createdAt',
       itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: new Date(item.createdAt || item.createdTimestamp), locale: 'no', options: { } })}</div>
     },
     {
       label: 'Modified',
-      onClick: () => handleSortClick(['modifiedTimestamp']),
+      onClick: () => handleSortClick(['updatedAt']),
       itemTooltip: 'updatedAt',
       itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: item.updatedAt || item.modifiedTimestamp, locale: 'no' })}</div>
     },
