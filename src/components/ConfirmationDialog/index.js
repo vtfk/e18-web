@@ -7,12 +7,12 @@ export default function ConfirmationDialog ({ open, title, children, okBtnText, 
   }, [onClickOk])
 
   const listenForEnter = useCallback((e) => {
-    try {
-      e.preventDefault()
-      e.stopPropagation()
-    } catch {}
-
     if (e.key === 'Enter') {
+      try {
+        e.preventDefault()
+        e.stopPropagation()
+      } catch {}
+
       handleOkClick()
     }
   }, [handleOkClick])
