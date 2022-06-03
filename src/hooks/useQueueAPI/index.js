@@ -4,7 +4,7 @@ import { orderBy } from 'lodash'
 
 import { API } from '../../config'
 
-export default function useAPI (defaultDatabase, defaultQueue = [], defaultItemsOptions = {}, top = 1000000) {
+export function useQueueAPI (defaultDatabase, defaultQueue = [], defaultItemsOptions = {}, top = 1000000) {
   const [_queue, setQueue] = useState(defaultQueue)
   const [itemsOptions, setItemsOptions] = useState(defaultItemsOptions)
   const [database] = useState(defaultDatabase === 'queue' ? 'jobs' : defaultDatabase === 'statistics' ? 'statistics' : '')

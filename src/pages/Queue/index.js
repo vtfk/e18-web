@@ -6,7 +6,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter'
 
 import ConfirmationDialog from '../../components/ConfirmationDialog'
 
-import useAPI from '../../hooks/useAPI'
+import { useQueueAPI } from '../../hooks/useQueueAPI'
 
 import './styles.scss'
 
@@ -21,7 +21,7 @@ const defaultConfirmationItem = {
 export function Queue () {
   const [types, setTypes] = useState([])
   const [mulitpleTypes, setMulitpleTypes] = useState(false)
-  const { allQueue, queue, itemsOptions, loading, setItemsOptions, updateQueueItem, updating } = useAPI('queue')
+  const { allQueue, queue, itemsOptions, loading, setItemsOptions, updateQueueItem, updating } = useQueueAPI('queue')
   const [completed, setCompleted] = useState(0)
   const [failed, setFailed] = useState(0)
   const [retired, setRetired] = useState(0)

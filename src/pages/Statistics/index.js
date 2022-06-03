@@ -4,7 +4,7 @@ import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, P
 import { Skeleton } from '@vtfk/components'
 import { uniqBy } from 'lodash'
 
-import useAPI from '../../hooks/useAPI'
+import { useQueueAPI } from '../../hooks/useQueueAPI'
 
 import './styles.scss'
 
@@ -136,7 +136,7 @@ const getTasksData = queue => {
 ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend)
 
 export function Statistics () {
-  const { allQueue, loading } = useAPI('statistics')
+  const { allQueue, loading } = useQueueAPI('statistics')
   const [systemsData, setSystemsData] = useState(barDataMock)
   const [tasksData, setTasksData] = useState(barDataMock)
 
