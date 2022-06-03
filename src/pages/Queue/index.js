@@ -32,7 +32,7 @@ export function Queue () {
 
   const generateActionButtons = (item, index, view = true) => {
     const getTitle = type => {
-      if (item.e18 === false) return `Can only ${type} a task handled by E18`
+      if (item.e18 === false && type !== 'retire') return `Can only ${type} a task handled by E18`
       if (type === 'retry') return item.status !== 'failed' ? `Can't retry a ${item.status} task` : 'Retry'
       if (type === 'suspend') return ['completed', 'retired'].includes(item.status) ? `Can't suspend a ${item.status} task` : item.status === 'suspended' ? 'Unsuspend' : 'Suspend'
       if (type === 'retire') return ['completed', 'retired'].includes(item.status) ? `Can't retire a ${item.status} task` : 'Retire'
@@ -55,7 +55,7 @@ export function Queue () {
         />
         <IconButton
           icon='close'
-          disabled={['completed', 'retired'].includes(item.status) || item.e18 === false}
+          disabled={['completed', 'retired'].includes(item.status)}
           onClick={() => setConfirmationItem({ action: 'retire', item, index, message: 'Status changed to retire' })}
           title={getTitle('retire')}
         />
