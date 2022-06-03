@@ -43,15 +43,14 @@ const items = [
 
 const menuItems = [
   {
-    onClick: () => {
-      window.location.href = '/logout'
-    },
+    onClick: () => window.location.href = '/logout',
     title: 'Logg av 🤡'
   }
 ]
 
 export function DefaultLayout () {
   const token = getValidToken()
+
   return (
     <div className='app'>
       <div className='default-layout'>
