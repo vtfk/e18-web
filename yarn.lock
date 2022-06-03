@@ -2048,15 +2048,14 @@
     "@typescript-eslint/types" "5.17.0"
     "eslint-visitor-keys" "^3.0.0"
 
-"@vtfk/components@0.11.3":
-  "integrity" "sha512-31gITEt39uY3DukSENJC4JBzEbymyPK2G21t1gwXz7olCzHGbOm2X3+H93C9Ec29zobT/V9jxa+s3RyucPF9Rg=="
-  "resolved" "https://registry.npmjs.org/@vtfk/components/-/components-0.11.3.tgz"
-  "version" "0.11.3"
+"@vtfk/components@0.11.4":
+  "integrity" "sha512-sx/racf3NpwnfM6lVtxE2xw5S0muTZJNXF5LBkHxmeuppq/OJ/irMoOkwXn6ysFdgg7nnEjMEJPlumzMEHswAQ=="
+  "resolved" "https://registry.npmjs.org/@vtfk/components/-/components-0.11.4.tgz"
+  "version" "0.11.4"
   dependencies:
     "lodash.get" "^4.4.2"
     "nanoid" "3.3.4"
     "react-datepicker" "4.7.0"
-    "react-router-dom" "6.3.0"
     "react-scrolllock" "5.0.1"
     "use-debounce" "7.0.1"
 
@@ -7447,18 +7446,18 @@
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.11.0.tgz"
   "version" "0.11.0"
 
-"react-router-dom@^6.3.0", "react-router-dom@6.3.0":
-  "integrity" "sha512-uaJj7LKytRxZNQV8+RbzJWnJ8K2nPsOOEuX7aQstlMZKQT0164C+X2w6bnkqU3sjtLvpd5ojrezAyfZ1+0sStw=="
-  "resolved" "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.3.0.tgz"
-  "version" "6.3.0"
+"react-router-dom@^6.x.x", "react-router-dom@6.2.2":
+  "integrity" "sha512-AtYEsAST7bDD4dLSQHDnk/qxWLJdad5t1HFa1qJyUrCeGgEuCSw0VB/27ARbF9Fi/W5598ujvJOm3ujUCVzuYQ=="
+  "resolved" "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.2.2.tgz"
+  "version" "6.2.2"
   dependencies:
     "history" "^5.2.0"
-    "react-router" "6.3.0"
+    "react-router" "6.2.2"
 
-"react-router@6.3.0":
-  "integrity" "sha512-7Wh1DzVQ+tlFjkeo+ujvjSqSJmkt1+8JO+T5xklPlgrh70y7ogx75ODRW0ThWhY7S+6yEDks8TYrtQe/aoboBQ=="
-  "resolved" "https://registry.npmjs.org/react-router/-/react-router-6.3.0.tgz"
-  "version" "6.3.0"
+"react-router@6.2.2":
+  "integrity" "sha512-/MbxyLzd7Q7amp4gDOGaYvXwhEojkJD5BtExkuKmj39VEE0m3l/zipf6h2WIB2jyAO0lI6NGETh4RDcktRm4AQ=="
+  "resolved" "https://registry.npmjs.org/react-router/-/react-router-6.2.2.tgz"
+  "version" "6.2.2"
   dependencies:
     "history" "^5.2.0"
 
