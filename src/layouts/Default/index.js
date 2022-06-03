@@ -19,21 +19,21 @@ const user = {
 
 const items = [
   {
-    href: '/',
+    to: '/',
     icon: {
       name: 'activity'
     },
     title: 'Queue'
   },
   {
-    href: '/statistics',
+    to: '/statistics',
     icon: {
       name: 'statistics'
     },
     title: 'Statistics'
   },
   {
-    href: '/apikeys',
+    to: '/apikeys',
     icon: {
       name: 'students'
     },

@@ -25,7 +25,7 @@
   dependencies:
     "@azure/msal-common" "^6.3.0"
 
-"@azure/msal-common@6.3.0":
+"@azure/msal-common@^6.3.0":
   "integrity" "sha512-ZyLq9GdnLBi/83YpysE86TFKbA0TuvfNAN5Psqu20cdAjLo/4rw4ttiItdh1G//XeGErHk9qn57gi2AYU1b5/Q=="
   "resolved" "https://registry.npmjs.org/@azure/msal-common/-/msal-common-6.3.0.tgz"
   "version" "6.3.0"
@@ -2048,14 +2048,15 @@
     "@typescript-eslint/types" "5.17.0"
     "eslint-visitor-keys" "^3.0.0"
 
-"@vtfk/components@0.10.0":
-  "integrity" "sha512-4TJzyHoi57f/iyNi1s12R7F0ifIUXz3kl19b28dk/ALbPMht1qR3gR9/Tbd/gPsmkfcpuIb1WWrWNeM6YTKgsA=="
-  "resolved" "https://registry.npmjs.org/@vtfk/components/-/components-0.10.0.tgz"
-  "version" "0.10.0"
+"@vtfk/components@0.11.3":
+  "integrity" "sha512-31gITEt39uY3DukSENJC4JBzEbymyPK2G21t1gwXz7olCzHGbOm2X3+H93C9Ec29zobT/V9jxa+s3RyucPF9Rg=="
+  "resolved" "https://registry.npmjs.org/@vtfk/components/-/components-0.11.3.tgz"
+  "version" "0.11.3"
   dependencies:
     "lodash.get" "^4.4.2"
-    "nanoid" "3.3.3"
+    "nanoid" "3.3.4"
     "react-datepicker" "4.7.0"
+    "react-router-dom" "6.3.0"
     "react-scrolllock" "5.0.1"
     "use-debounce" "7.0.1"
 
@@ -4243,7 +4244,7 @@
     "strip-final-newline" "^2.0.0"
 
 "exenv@^1.2.2":
-  "integrity" "sha1-KueOhdmJQVhnCwPUe+wfA72Ru50="
+  "integrity" "sha512-Z+ktTxTwv9ILfgKCk32OX3n/doe+OcLTRtqK9pcL+JsP3J1/VW8Uvl4ZjLlKqeW4rzK4oesDOGMEMRIZqtP4Iw=="
   "resolved" "https://registry.npmjs.org/exenv/-/exenv-1.2.2.tgz"
   "version" "1.2.2"
 
@@ -5981,7 +5982,7 @@
   "version" "4.0.8"
 
 "lodash.get@^4.4.2":
-  "integrity" "sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk="
+  "integrity" "sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ=="
   "resolved" "https://registry.npmjs.org/lodash.get/-/lodash.get-4.4.2.tgz"
   "version" "4.4.2"
 
@@ -6215,10 +6216,10 @@
     "dns-packet" "^1.3.1"
     "thunky" "^1.0.2"
 
-"nanoid@^3.3.1", "nanoid@3.3.3":
-  "integrity" "sha512-p1sjXuopFs0xg+fPASzQ28agW1oHD7xDsd9Xkf3T15H3c/cifrFHVwrh74PdoklAPi+i7MdRsE47vm2r6JoB+w=="
-  "resolved" "https://registry.npmjs.org/nanoid/-/nanoid-3.3.3.tgz"
-  "version" "3.3.3"
+"nanoid@^3.3.1", "nanoid@3.3.4":
+  "integrity" "sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw=="
+  "resolved" "https://registry.npmjs.org/nanoid/-/nanoid-3.3.4.tgz"
+  "version" "3.3.4"
 
 "natural-compare@^1.4.0":
   "integrity" "sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc="
@@ -7399,7 +7400,7 @@
     "strip-ansi" "^6.0.1"
     "text-table" "^0.2.0"
 
-"react-dom@^15.5.x || ^16.x || ^17.x", "react-dom@^16.14.0 || ^17.0.0 || ^17.0.1 || ^17.0.1 || ^17.0.1 || ^18.0.0", "react-dom@^16.9.0 || ^17", "react-dom@<18.0.0", "react-dom@>=16.8", "react-dom@17.0.2":
+"react-dom@^15.5.x || ^16.x || ^17.x", "react-dom@^16.14.0 || ^17.0.0 || ^17.0.1 || ^17.0.1 || ^17.0.1 || ^18.0.0", "react-dom@^16.8.0 || ^17 || ^18", "react-dom@^16.9.0 || ^17", "react-dom@<18.0.0", "react-dom@>=16.8", "react-dom@17.0.2":
   "integrity" "sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-17.0.2.tgz"
   "version" "17.0.2"
@@ -7434,9 +7435,9 @@
   "version" "6.12.1"
 
 "react-popper@^2.2.5":
-  "integrity" "sha512-kxGkS80eQGtLl18+uig1UIf9MKixFSyPxglsgLBxlYnyDf65BiY9B3nZSc6C9XUNDgStROB0fMQlTEz1KxGddw=="
-  "resolved" "https://registry.npmjs.org/react-popper/-/react-popper-2.2.5.tgz"
-  "version" "2.2.5"
+  "integrity" "sha512-e1hj8lL3uM+sgSR4Lxzn5h1GxBlpa4CQz0XLF8kx4MDrDRWY0Ena4c97PUeSX9i5W3UAfDP0z0FXCTQkoXUl3Q=="
+  "resolved" "https://registry.npmjs.org/react-popper/-/react-popper-2.3.0.tgz"
+  "version" "2.3.0"
   dependencies:
     "react-fast-compare" "^3.0.1"
     "warning" "^4.0.2"
@@ -7446,18 +7447,18 @@
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.11.0.tgz"
   "version" "0.11.0"
 
-"react-router-dom@6.2.2":
-  "integrity" "sha512-AtYEsAST7bDD4dLSQHDnk/qxWLJdad5t1HFa1qJyUrCeGgEuCSw0VB/27ARbF9Fi/W5598ujvJOm3ujUCVzuYQ=="
-  "resolved" "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.2.2.tgz"
-  "version" "6.2.2"
+"react-router-dom@^6.3.0", "react-router-dom@6.3.0":
+  "integrity" "sha512-uaJj7LKytRxZNQV8+RbzJWnJ8K2nPsOOEuX7aQstlMZKQT0164C+X2w6bnkqU3sjtLvpd5ojrezAyfZ1+0sStw=="
+  "resolved" "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.3.0.tgz"
+  "version" "6.3.0"
   dependencies:
     "history" "^5.2.0"
-    "react-router" "6.2.2"
+    "react-router" "6.3.0"
 
-"react-router@6.2.2":
-  "integrity" "sha512-/MbxyLzd7Q7amp4gDOGaYvXwhEojkJD5BtExkuKmj39VEE0m3l/zipf6h2WIB2jyAO0lI6NGETh4RDcktRm4AQ=="
-  "resolved" "https://registry.npmjs.org/react-router/-/react-router-6.2.2.tgz"
-  "version" "6.2.2"
+"react-router@6.3.0":
+  "integrity" "sha512-7Wh1DzVQ+tlFjkeo+ujvjSqSJmkt1+8JO+T5xklPlgrh70y7ogx75ODRW0ThWhY7S+6yEDks8TYrtQe/aoboBQ=="
+  "resolved" "https://registry.npmjs.org/react-router/-/react-router-6.3.0.tgz"
+  "version" "6.3.0"
   dependencies:
     "history" "^5.2.0"
 
@@ -7534,7 +7535,7 @@
     "prismjs" "^1.27.0"
     "refractor" "^3.6.0"
 
-"react@^15.5.x || ^16.x || ^17.x", "react@^16.14.0 || ^17.0.0 || ^17.0.1 || ^17.0.1 || ^17.0.1 || ^18.0.0", "react@^16.3.0", "react@^16.8.0 || ^17", "react@^16.8.0 || ^17.0.0", "react@^16.9.0 || ^17", "react@<18.0.0", "react@>= 0.14.0", "react@>= 16", "react@>=16.8", "react@>=16.8.0", "react@17.0.2":
+"react@^15.5.x || ^16.x || ^17.x", "react@^16.14.0 || ^17.0.0 || ^17.0.1 || ^17.0.1 || ^17.0.1 || ^18.0.0", "react@^16.3.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0", "react@^16.9.0 || ^17", "react@<18.0.0", "react@>= 0.14.0", "react@>= 16", "react@>=16.8", "react@>=16.8.0", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"
