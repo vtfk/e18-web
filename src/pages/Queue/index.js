@@ -100,15 +100,15 @@ export function Queue () {
     },
     {
       label: 'Created',
-      onClick: () => handleSortClick(['createdAt']),
-      itemTooltip: 'createdAt',
-      itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: new Date(item.createdAt || item.createdTimestamp), locale: 'no', options: { } })}</div>
+      onClick: () => handleSortClick(['createdTimeStamp']),
+      itemTooltip: 'createdTimeStamp',
+      itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: new Date(item.createdTimestamp), locale: 'no', options: { } })}</div>
     },
     {
       label: 'Modified',
-      onClick: () => handleSortClick(['updatedAt']),
-      itemTooltip: 'updatedAt',
-      itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: item.updatedAt || item.modifiedTimestamp, locale: 'no' })}</div>
+      onClick: () => handleSortClick(['modifiedTimeStamp']),
+      itemTooltip: 'modifiedTimeStamp',
+      itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: new Date(item.modifiedTimestamp), locale: 'no' })}</div>
     },
     {
       label: 'Actions',
@@ -283,10 +283,10 @@ export function Queue () {
                       <strong>Tags</strong>: {JSON.stringify(queueItems[dialogItemIndex].tags)}
                     </div>
                     <div className='dialog-item-row'>
-                      <strong>Created</strong>: {queueItems[dialogItemIndex].createdAt || queueItems[dialogItemIndex].createdTimestamp}
+                      <strong>Created</strong>: {queueItems[dialogItemIndex].createdTimestamp}
                     </div>
                     <div className='dialog-item-row'>
-                      <strong>Modified</strong>: {queueItems[dialogItemIndex].updatedAt || queueItems[dialogItemIndex].modifiedTimestamp}
+                      <strong>Modified</strong>: {queueItems[dialogItemIndex].modifiedTimestamp}
                     </div>
                     <div className='dialog-item-row'>
                       <strong>Comments</strong>:

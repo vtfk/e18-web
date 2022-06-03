@@ -43,7 +43,7 @@ export function useQueueAPI (defaultDatabase, defaultQueue = [], defaultItemsOpt
   const options = useMemo(() => {
     return {
       filter: [],
-      orderBy: ['createdAt'],
+      orderBy: ['createdTimeStamp'],
       order: 'desc',
       ...itemsOptions
     }
