@@ -22,15 +22,15 @@ export function APIKeys () {
     },
     {
       label: 'Created',
-      value: 'createdTimeStamp',
+      value: 'createdTimestamp',
       itemTooltip: (value, item, header, index) => <div>{relativeDateFormat({ toDate: new Date(item.createdTimestamp), locale: 'no' })}</div>,
-      onClick: () => handleSortClick(['createdTimeStamp'])
+      onClick: () => handleSortClick(['createdTimestamp'])
     },
     {
       label: 'Modified',
-      value: 'modifiedTimeStamp',
+      value: 'modifiedTimestamp',
       itemTooltip: (value, item, header, index) => <div>{relativeDateFormat({ toDate: new Date(item.modifiedTimestamp), locale: 'no' })}</div>,
-      onClick: () => handleSortClick(['modifiedTimeStamp'])
+      onClick: () => handleSortClick(['modifiedTimestamp'])
     },
     {
       label: 'Hash',

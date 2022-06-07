@@ -100,14 +100,14 @@ export function Queue () {
     },
     {
       label: 'Created',
-      onClick: () => handleSortClick(['createdTimeStamp']),
-      itemTooltip: 'createdTimeStamp',
+      onClick: () => handleSortClick(['createdTimestamp']),
+      itemTooltip: 'createdTimestamp',
       itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: new Date(item.createdTimestamp), locale: 'no', options: { } })}</div>
     },
     {
       label: 'Modified',
-      onClick: () => handleSortClick(['modifiedTimeStamp']),
-      itemTooltip: 'modifiedTimeStamp',
+      onClick: () => handleSortClick(['modifiedTimestamp']),
+      itemTooltip: 'modifiedTimestamp',
       itemRender: (value, item, header, index) => <div>{relativeDateFormat({ toDate: new Date(item.modifiedTimestamp), locale: 'no' })}</div>
     },
     {
