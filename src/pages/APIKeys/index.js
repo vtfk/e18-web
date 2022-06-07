@@ -2,6 +2,7 @@ import { relativeDateFormat } from '@vtfk/utilities'
 import { IconButton, Table } from '@vtfk/components'
 import React, { useState } from 'react'
 import { isEqual } from 'lodash'
+import { words as capitalizeWords } from 'capitalize'
 
 import ConfirmationDialog from '../../components/ConfirmationDialog'
 
@@ -10,8 +11,8 @@ import { useKeysAPI } from '../../hooks/useKeysAPI'
 import './styles.scss'
 
 export function APIKeys () {
-  const { itemsOptions, keys, loading, removeKeysItem, setItemsOptions, updating } = useKeysAPI()
-  const [itemIndex, setItemIndex] = useState(-1)
+  const { itemsOptions, keys, loading, removeKeysItem, setItemsOptions, updateKeysItem, updating } = useKeysAPI()
+  const [confirmationItem, setConfirmationItem] = useState(null)
 
   const headers = [
     {
@@ -37,8 +38,13 @@ export function APIKeys () {
         return (
           <div className='item-actions'>
             <IconButton
+              icon={item.enabled ? 'pause' : 'play'}
+              onClick={() => setConfirmationItem({ action: item.enabled ? 'disable' : 'enable', index })}
+              title={item.enabled ? 'Disable' : 'Enable'}
+            />
+            <IconButton
               icon='close'
-              onClick={() => setItemIndex(index)}
+              onClick={() => setConfirmationItem({ action: 'delete', index })}
               title='Delete'
             />
           </div>
@@ -55,15 +61,19 @@ export function APIKeys () {
     })
   }
 
-  const handleConfirmationOkClick = async id => {
+  const handleConfirmationOkClick = async () => {
     try {
-      await removeKeysItem(id)
-      console.log('Successfully removed key', id)
-      setItemIndex(-1)
+      const { _id, name } = keys[confirmationItem.index]
+      if (confirmationItem.action === 'delete') {
+        await removeKeysItem(_id)
+      } else if (['enable', 'disable'].includes(confirmationItem.action)) {
+        await updateKeysItem(_id, { enabled: confirmationItem.action === 'enable', name })
+      }
+      console.log(`Successfully ${confirmationItem.action}d key`, _id) // TODO: Add toast for success
+      setConfirmationItem(null)
     } catch (error) {
-      const removeFailed = error.response?.data?.message || error.message || error
-      console.log('Failed to remove key:', removeFailed)
-      // TODO: Add toast for error message
+      const failed = error.response?.data?.message || error.message || error
+      console.log(`Failed to ${confirmationItem.action} key:`, failed) // TODO: Add toast for error message
     }
   }
 
@@ -86,18 +96,16 @@ export function APIKeys () {
       </div>
 
       {
-        itemIndex > -1 &&
+        confirmationItem && confirmationItem.index > -1 &&
           <ConfirmationDialog
             open
-            title={<span>{`Delete api key ${keys[itemIndex].name} ?`}</span>}
+            title={<span>{`${capitalizeWords(confirmationItem.action)} api key "${keys[confirmationItem.index].name}" ?`}</span>}
             okBtnText='Yes'
             cancelBtnText='No'
             okBtnDisabled={updating}
-            onClickCancel={() => setItemIndex(-1)}
-            onClickOk={() => handleConfirmationOkClick(keys[itemIndex]._id)}
-            onDismiss={() => setItemIndex(-1)}
-            height='30%'
-            width='30%'
+            onClickCancel={() => setConfirmationItem(null)}
+            onClickOk={() => handleConfirmationOkClick()}
+            onDismiss={() => setConfirmationItem(null)}
           />
       }
     </div>
