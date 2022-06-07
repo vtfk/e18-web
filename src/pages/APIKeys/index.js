@@ -1,5 +1,5 @@
 import { relativeDateFormat } from '@vtfk/utilities'
-import { IconButton, Table } from '@vtfk/components'
+import { IconButton, Table, TextField } from '@vtfk/components'
 import React, { useState } from 'react'
 import { isEqual } from 'lodash'
 import { words as capitalizeWords } from 'capitalize'
@@ -11,8 +11,10 @@ import { useKeysAPI } from '../../hooks/useKeysAPI'
 import './styles.scss'
 
 export function APIKeys () {
-  const { itemsOptions, keys, loading, removeKeysItem, setItemsOptions, updateKeysItem, updating } = useKeysAPI()
+  const { itemsOptions, keys, loading, newKeysItem, removeKeysItem, setItemsOptions, updateKeysItem, updating } = useKeysAPI()
   const [confirmationItem, setConfirmationItem] = useState(null)
+  const [openNewKeyDialog, setOpenNewKeyDialog] = useState(false)
+  const [newKeyName, setNewKeyName] = useState('')
 
   const headers = [
     {
@@ -81,6 +83,18 @@ export function APIKeys () {
     }
   }
 
+  const handleNewKeyOkClick = async () => {
+    try {
+      await newKeysItem(newKeyName)
+      console.log('Successfully added key', newKeyName) // TODO: Add toast for success
+      setOpenNewKeyDialog(false)
+      setNewKeyName('')
+    } catch (error) {
+      const failed = error.response?.data?.message || error.message || error
+      console.log('Failed to add key:', failed) // TODO: Add toast for error message
+    }
+  }
+
   return (
     <div className='apikeys-container'>
       <div className='apikeys'>
@@ -88,7 +102,7 @@ export function APIKeys () {
           className='add-key-button'
           bordered
           icon='add'
-          onClick={() => console.log('Add new key')}
+          onClick={() => setOpenNewKeyDialog(true)}
           title='Add key'
 
         />
@@ -111,6 +125,26 @@ export function APIKeys () {
             onClickOk={() => handleConfirmationOkClick()}
             onDismiss={() => setConfirmationItem(null)}
           />
+      }
+
+      {
+        openNewKeyDialog &&
+          <ConfirmationDialog
+            open
+            title='Create new api key'
+            okBtnText='Create'
+            cancelBtnText='Cancel'
+            okBtnDisabled={updating}
+            onClickCancel={() => setOpenNewKeyDialog(false)}
+            onClickOk={() => handleNewKeyOkClick()}
+            onDismiss={() => setOpenNewKeyDialog(false)}
+          >
+            <TextField
+              placeholder='Key name'
+              value={newKeyName}
+              onChange={(e) => setNewKeyName(e.target.value)}
+              />
+          </ConfirmationDialog>
       }
     </div>
   )

@@ -50,6 +50,26 @@ export function useKeysAPI (defaultItemsOptions = {}, top = 1000000) {
     return orderBy(filtered, options.orderBy, options.order)
   }, [options, _keys])
 
+  // new keys item
+  const newKeysItem = async name => {
+    const options = {
+      headers: {
+        'X-API-KEY': API.TOKEN
+      }
+    }
+
+    try {
+      setUpdating(true)
+      const { data } = await axios.post(`${API.URL}/apikeys?fullitem=true`, { name }, options)
+      setKeys([..._keys, data])
+      setUpdating(false)
+      return data
+    } catch (error) {
+      setUpdating(false)
+      throw error
+    }
+  }
+  
   const updateKeysItem = async (id, updateObject) => {
     const options = {
       headers: {
@@ -101,6 +121,7 @@ export function useKeysAPI (defaultItemsOptions = {}, top = 1000000) {
     itemsOptions: options,
     loading,
     keys,
+    newKeysItem,
     removeKeysItem,
     setItemsOptions,
     updateKeysItem,
