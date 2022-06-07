@@ -33,6 +33,10 @@ export function APIKeys () {
       onClick: () => handleSortClick(['modifiedTimeStamp'])
     },
     {
+      label: 'Hash',
+      itemRender: (value, item, header, index) => <span>{`${item.hash.substring(0, 5)}*****`}</span>
+    },
+    {
       label: 'Actions',
       itemRender: (value, item, header, index) => {
         return (
