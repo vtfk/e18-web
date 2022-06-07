@@ -1,6 +1,6 @@
 import { relativeDateFormat } from '@vtfk/utilities'
-import { IconButton, Table, TextField } from '@vtfk/components'
-import React, { useState } from 'react'
+import { Button, Dialog, DialogBody, DialogTitle, Heading3, IconButton, Table, TextField } from '@vtfk/components'
+import React, { useRef, useState } from 'react'
 import { isEqual } from 'lodash'
 import { words as capitalizeWords } from 'capitalize'
 
@@ -15,6 +15,9 @@ export function APIKeys () {
   const [confirmationItem, setConfirmationItem] = useState(null)
   const [openNewKeyDialog, setOpenNewKeyDialog] = useState(false)
   const [newKeyName, setNewKeyName] = useState('')
+  const [newKey, setNewKey] = useState(null)
+
+  const keyRef = useRef(null)
 
   const headers = [
     {
@@ -85,14 +88,20 @@ export function APIKeys () {
 
   const handleNewKeyOkClick = async () => {
     try {
-      await newKeysItem(newKeyName)
+      const key = await newKeysItem(newKeyName)
       console.log('Successfully added key', newKeyName) // TODO: Add toast for success
       setOpenNewKeyDialog(false)
       setNewKeyName('')
+      setNewKey(key)
     } catch (error) {
       const failed = error.response?.data?.message || error.message || error
       console.log('Failed to add key:', failed) // TODO: Add toast for error message
     }
+  }
+
+  const copyKey = () => {
+    navigator.clipboard.writeText(keyRef.current.value)
+    setNewKey(null)
   }
 
   return (
@@ -145,6 +154,30 @@ export function APIKeys () {
               onChange={(e) => setNewKeyName(e.target.value)}
               />
           </ConfirmationDialog>
+      }
+
+      {
+        newKey && newKey.key &&
+          <Dialog
+            isOpen
+            onDismiss={() => setNewKey(null)}
+          >
+            <DialogTitle isShowCloseButton>
+              <Heading3>{newKey.name}</Heading3>
+            </DialogTitle>
+            <DialogBody>
+              <div className='new-key-title'>Copy your key and save it somewhere secure. You won't be able to see it again!</div>
+              <TextField
+                disabled
+                hidePlaceholder
+                value={newKey.key}
+              />
+              <input type='hidden' value={newKey.key} ref={keyRef} />
+              <Button onClick={() => copyKey()} type='secondary'>
+                Copy key
+              </Button>
+            </DialogBody>
+          </Dialog>
       }
     </div>
   )

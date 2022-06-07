@@ -61,7 +61,9 @@ export function useKeysAPI (defaultItemsOptions = {}, top = 1000000) {
     try {
       setUpdating(true)
       const { data } = await axios.post(`${API.URL}/apikeys?fullitem=true`, { name }, options)
-      setKeys([..._keys, data])
+      const newKey = JSON.parse(JSON.stringify(data))
+      delete newKey.key
+      setKeys([..._keys, newKey])
       setUpdating(false)
       return data
     } catch (error) {
