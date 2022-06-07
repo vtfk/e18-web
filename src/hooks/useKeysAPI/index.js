@@ -37,8 +37,8 @@ export function useKeysAPI (defaultItemsOptions = {}, top = 1000000) {
   const options = useMemo(() => {
     return {
       filter: [],
-      orderBy: ['createdTimeStamp'],
-      order: 'desc',
+      orderBy: ['name'],
+      order: 'asc',
       ...itemsOptions
     }
   }, [itemsOptions])
