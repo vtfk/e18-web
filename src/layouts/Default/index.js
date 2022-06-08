@@ -9,6 +9,8 @@ import { Statistics } from '../../pages/Statistics'
 import { APIKeys } from '../../pages/APIKeys'
 import { PageNotFound } from '../../pages/PageNotFound'
 
+import { APP } from '../../config'
+
 import './styles.scss'
 
 const user = {
@@ -43,7 +45,10 @@ const items = [
 
 const menuItems = [
   {
-    onClick: () => window.location.href = '/logout',
+    onClick: () => {
+      if (APP.IS_MOCK) alert('Mock mode is enabled 🤡')
+      else window.location.href = '/logout'
+    },
     title: 'Logg av 🤡'
   }
 ]
