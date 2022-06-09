@@ -1,7 +1,7 @@
 import { rest } from 'msw'
 
 import { API } from '../config'
-import { get } from './mock-data'
+import { add, get, put, remove } from './mock-data'
 import { getRandomHex, getRandomNumber } from './lib/helpers'
 
 const getReqParams = req => {
@@ -24,14 +24,12 @@ const getTop = (req, defaultTop = 25) => {
 export const handlers = [
   // jobs
   rest.get(`${API.URL}/jobs`, (req, res, ctx) => {
-    // TODO: Implement localstorage cache with 4 hours TTL
     return res(
       ctx.status(200),
       ctx.json(get({ top: getTop(req), type: 'jobs' }))
     )
   }),
   rest.put(`${API.URL}/jobs/:id`, (req, res, ctx) => {
-    // TODO: Implement localstorage cache with 4 hours TTL
     const job = get({ id: req.params.id, type: 'jobs' })
     if (!job) {
       return res(
@@ -47,17 +45,16 @@ export const handlers = [
       delete req.body.comment
     }
 
+    const updatedJob = { ...job, ...req.body }
+    put({ data: updatedJob, type: 'jobs' })
+
     return res(
       ctx.status(200),
-      ctx.json({
-        ...job,
-        ...req.body
-      })
+      ctx.json(updatedJob)
     )
   }),
   // statistics
   rest.get(`${API.URL}/statistics`, (req, res, ctx) => {
-    // TODO: Implement localstorage cache with 4 hours TTL
     return res(
       ctx.status(200),
       ctx.json(get({ top: getTop(req), type: 'statistics' }))
@@ -65,14 +62,12 @@ export const handlers = [
   }),
   // apikeys
   rest.get(`${API.URL}/apikeys`, (req, res, ctx) => {
-    // TODO: Implement localstorage cache with 4 hours TTL
     return res(
       ctx.status(200),
       ctx.json(get({ top: getTop(req), type: 'apikeys' }))
     )
   }),
   rest.post(`${API.URL}/apikeys`, (req, res, ctx) => {
-    // TODO: Implement localstorage cache with 4 hours TTL
     const { fullitem } = getReqParams(req)
     const apiKeys = get({ top: getTop(req), type: 'apikeys' })
     const newApiKey = JSON.parse(JSON.stringify(apiKeys.data[0]))
@@ -83,6 +78,8 @@ export const handlers = [
     newApiKey.createdTimestamp = new Date().toISOString()
     newApiKey.modifiedTimestamp = newApiKey.createdTimestamp
     newApiKey.name = req.body.name
+
+    add({ data: newApiKey, type: 'apikeys' })
 
     if (fullitem) {
       return res(
@@ -103,7 +100,6 @@ export const handlers = [
     }
   }),
   rest.put(`${API.URL}/apikeys/:id`, (req, res, ctx) => {
-    // TODO: Implement localstorage cache with 4 hours TTL
     const apiKey = get({ id: req.params.id, type: 'apikeys' })
     if (!apiKey) {
       return res(
@@ -112,16 +108,15 @@ export const handlers = [
       )
     }
 
+    const updatedApiKey = { ...apiKey, ...req.body }
+    put({ data: updatedApiKey, type: 'apikeys' })
+
     return res(
       ctx.status(200),
-      ctx.json({
-        ...apiKey,
-        ...req.body
-      })
+      ctx.json(updatedApiKey)
     )
   }),
   rest.delete(`${API.URL}/apikeys/:id`, (req, res, ctx) => {
-    // TODO: Implement localstorage cache with 4 hours TTL
     const apiKey = get({ id: req.params.id, type: 'apikeys' })
     if (!apiKey) {
       return res(
@@ -130,9 +125,10 @@ export const handlers = [
       )
     }
 
+    remove({ id: req.params.id, type: 'apikeys' })
+
     return res(
-      ctx.status(200),
-      ctx.json({})
+      ctx.status(200)
     )
   })
 ]
