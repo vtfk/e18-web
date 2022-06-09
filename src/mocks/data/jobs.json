@@ -1,0 +1,978 @@
+[
+  {
+    "_id": "6272276106aa81c00a4b7ecd",
+    "system": "vikarapp",
+    "type": "deactivate_substitutions",
+    "status": "retired",
+    "projectId": 144,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tasks": [
+      {
+        "system": "vikarapp",
+        "method": "deactivate_substitution",
+        "status": "completed",
+        "retries": 0,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "6272276119097bf39cdd6d17",
+        "operations": []
+      }
+    ],
+    "tags": [],
+    "createdTimestamp": "2022-05-04T07:12:33.926Z",
+    "modifiedTimestamp": "2022-05-04T07:12:33.926Z",
+    "__v": 0
+  },
+  {
+    "_id": "6272316506aa81c00a4b7ece",
+    "system": "vikarapp",
+    "type": "activate_substitutions",
+    "status": "waiting",
+    "projectId": 144,
+    "e18": true,
+    "parallel": false,
+    "retries": 0,
+    "tasks": [
+      {
+        "system": "vikarapp",
+        "method": "activate_substitution",
+        "status": "completed",
+        "retries": 0,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "6272316519097bf39cdd6d1a",
+        "operations": []
+      }
+    ],
+    "tags": [],
+    "createdTimestamp": "2022-05-04T07:55:17.580Z",
+    "modifiedTimestamp": "2022-05-04T07:55:17.580Z",
+    "__v": 0
+  },
+  {
+    "_id": "627231d606aa81c00a4b7ecf",
+    "system": "vikarapp",
+    "type": "deactivate_substitutions",
+    "status": "completed",
+    "projectId": 144,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tasks": [
+      {
+        "system": "vikarapp",
+        "method": "deactivate_substitution",
+        "status": "completed",
+        "retries": 0,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "627231d619097bf39cdd6d1d",
+        "operations": []
+      }
+    ],
+    "tags": [],
+    "createdTimestamp": "2022-05-04T07:57:10.088Z",
+    "modifiedTimestamp": "2022-05-04T07:57:10.088Z",
+    "__v": 0
+  },
+  {
+    "_id": "6273723906aa81c00a4b7ed0",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "OPPMELDING_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T06:44:09.802Z",
+    "modifiedTimestamp": "2022-05-05T06:44:09.802Z",
+    "tasks": [],
+    "__v": 0
+  },
+  {
+    "_id": "6273723a06aa81c00a4b7ed1",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "SOKER_N_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T06:44:10.770Z",
+    "modifiedTimestamp": "2022-05-05T06:44:10.770Z",
+    "tasks": [],
+    "__v": 0
+  },
+  {
+    "_id": "6273723b06aa81c00a4b7ed2",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": true,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "TILBUD_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T06:44:11.022Z",
+    "modifiedTimestamp": "2022-05-12T13:39:14.833Z",
+    "tasks": [],
+    "__v": 0,
+    "comments": [
+      {
+        "user": "noen.andre@vtfk.no",
+        "message": "Status satt til suspend",
+        "_id": "627d0d9f4e5a908b9d6a8bd2"
+      },
+      {
+        "user": "noen.andre@vtfk.no",
+        "message": "Status satt til waiting",
+        "_id": "627d0e024e5a908b9d6a8bd5"
+      }
+    ]
+  },
+  {
+    "_id": "627372b306aa81c00a4b7ed3",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "OPPMELDING_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T06:46:11.988Z",
+    "modifiedTimestamp": "2022-05-05T06:46:11.988Z",
+    "tasks": [],
+    "__v": 0
+  },
+  {
+    "_id": "627372b406aa81c00a4b7ed4",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "SOKER_N_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T06:46:12.650Z",
+    "modifiedTimestamp": "2022-05-05T06:46:12.650Z",
+    "tasks": [],
+    "__v": 0
+  },
+  {
+    "_id": "627372b406aa81c00a4b7ed5",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "TILBUD_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T06:46:12.909Z",
+    "modifiedTimestamp": "2022-05-05T06:46:12.909Z",
+    "tasks": [],
+    "__v": 0
+  },
+  {
+    "_id": "6273735b06aa81c00a4b7ed6",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "OPPMELDING_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T06:48:59.568Z",
+    "modifiedTimestamp": "2022-05-05T06:48:59.568Z",
+    "tasks": [],
+    "__v": 0
+  },
+  {
+    "_id": "6273735c06aa81c00a4b7ed7",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "SOKER_N_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T06:49:00.053Z",
+    "modifiedTimestamp": "2022-05-05T06:49:00.053Z",
+    "tasks": [],
+    "__v": 0
+  },
+  {
+    "_id": "6273735c06aa81c00a4b7ed8",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "TILBUD_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T06:49:00.350Z",
+    "modifiedTimestamp": "2022-05-05T06:49:00.350Z",
+    "tasks": [],
+    "__v": 0
+  },
+  {
+    "_id": "627374a806aa81c00a4b7ed9",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "OPPMELDING_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T06:54:32.240Z",
+    "modifiedTimestamp": "2022-05-05T06:54:32.240Z",
+    "tasks": [],
+    "__v": 0
+  },
+  {
+    "_id": "627374a806aa81c00a4b7eda",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "TILBUD_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T06:54:32.856Z",
+    "modifiedTimestamp": "2022-05-05T06:54:32.856Z",
+    "tasks": [],
+    "__v": 0
+  },
+  {
+    "_id": "627374f706aa81c00a4b7edb",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "OPPMELDING_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T06:55:51.378Z",
+    "modifiedTimestamp": "2022-05-05T06:55:51.378Z",
+    "tasks": [],
+    "__v": 0
+  },
+  {
+    "_id": "627374f706aa81c00a4b7edc",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "TILBUD_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T06:55:51.943Z",
+    "modifiedTimestamp": "2022-05-05T06:55:51.943Z",
+    "tasks": [],
+    "__v": 0
+  },
+  {
+    "_id": "6273757706aa81c00a4b7edd",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "OPPMELDING_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T06:57:59.712Z",
+    "modifiedTimestamp": "2022-05-05T06:57:59.712Z",
+    "tasks": [],
+    "__v": 0
+  },
+  {
+    "_id": "6273757806aa81c00a4b7ede",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "TILBUD_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T06:58:00.411Z",
+    "modifiedTimestamp": "2022-05-05T06:58:00.411Z",
+    "tasks": [],
+    "__v": 0
+  },
+  {
+    "_id": "62738dca06aa81c00a4b7edf",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "suspended",
+    "projectId": 172,
+    "e18": true,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "OPPMELDING_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T08:41:46.968Z",
+    "modifiedTimestamp": "2022-05-30T07:30:12.667Z",
+    "tasks": [
+      {
+        "system": "p360",
+        "method": "SyncElevmappe",
+        "status": "completed",
+        "retries": 1,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "62738dcd06aa81c00a4b7ee2",
+        "operations": [
+          {
+            "status": "failed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "error": {
+              "statusCode": 404,
+              "headers": {
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "error": "Ingen funnet med angitt identifikasjon"
+              }
+            },
+            "_id": "62738dcf19097bf39cdd6d48"
+          },
+          {
+            "status": "completed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "data": {
+              "msg": "Succesfully synced elevmappe",
+              "privatePerson": {
+                "ssn": "12345678911",
+                "oldSsn": "12345678911",
+                "firstName": "Bjarte",
+                "lastName": "Tjøstheim",
+                "streetAddress": "Ukjent adresse",
+                "zipCode": " 9999",
+                "zipPlace": "_ Ukjent",
+                "addressCode": 0,
+                "recno": 237010,
+                "updated": false,
+                "updatedSsn": false
+              },
+              "elevmappe": {
+                "Recno": 234519,
+                "CaseNumber": "22/00045"
+              }
+            },
+            "_id": "62738dd319097bf39cdd6d4d"
+          }
+        ]
+      },
+      {
+        "system": "p360",
+        "method": "archive",
+        "status": "completed",
+        "retries": 0,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "62738dd306aa81c00a4b7ee3",
+        "operations": [
+          {
+            "status": "completed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "data": {
+              "Recno": 211741,
+              "DocumentNumber": "22/00045-3"
+            },
+            "_id": "62738dd519097bf39cdd6d5a"
+          }
+        ]
+      }
+    ],
+    "__v": 5,
+    "comments": [
+      {
+        "user": "noen.andre@vtfk.no",
+        "message": "Status changed to suspended",
+        "_id": "628e08d26150b70a308fca4e"
+      },
+      {
+        "user": "noen.andre@vtfk.no",
+        "message": "Status changed to waitingff",
+        "_id": "628e13ea6150b70a308fca80"
+      },
+      {
+        "user": "noen.andre@vtfk.no",
+        "message": "Status changed to susp",
+        "_id": "628e25556150b70a308fca9b"
+      },
+      {
+        "user": "noen.andre@vtfk.no",
+        "message": "Status changed to waitingfghrhe",
+        "_id": "6294724eb8eab53e2a16f72a"
+      },
+      {
+        "user": "noen.andre@vtfk.no",
+        "message": "Status changed to suspendedhghg",
+        "_id": "62947284b8eab53e2a16f737"
+      }
+    ]
+  },
+  {
+    "_id": "62738dcb06aa81c00a4b7ee0",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": true,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "SOKER_N_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T08:41:47.713Z",
+    "modifiedTimestamp": "2022-05-12T11:07:36.976Z",
+    "tasks": [
+      {
+        "system": "p360",
+        "method": "SyncElevmappe",
+        "status": "completed",
+        "retries": 1,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "62738dd806aa81c00a4b7ee4",
+        "operations": [
+          {
+            "status": "failed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "error": {
+              "statusCode": 404,
+              "headers": {
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "error": "Ingen funnet med angitt identifikasjon"
+              }
+            },
+            "_id": "62738dd919097bf39cdd6d61"
+          },
+          {
+            "status": "completed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "data": {
+              "msg": "Succesfully synced elevmappe",
+              "privatePerson": {
+                "ssn": "12345678911",
+                "oldSsn": "12345678911",
+                "firstName": "Bjarte",
+                "lastName": "Tjøstheim",
+                "streetAddress": "Ukjent adresse",
+                "zipCode": " 9999",
+                "zipPlace": "_ Ukjent",
+                "addressCode": 0,
+                "recno": 237010,
+                "updated": false,
+                "updatedSsn": false
+              },
+              "elevmappe": {
+                "Recno": 234519,
+                "CaseNumber": "22/00045"
+              }
+            },
+            "_id": "62738ddb19097bf39cdd6d66"
+          }
+        ]
+      }
+    ],
+    "__v": 3
+  },
+  {
+    "_id": "62738dcb06aa81c00a4b7ee1",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "waiting",
+    "projectId": 172,
+    "e18": true,
+    "parallel": false,
+    "retries": 0,
+    "tags": [
+      "TILBUD_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T08:41:47.852Z",
+    "modifiedTimestamp": "2022-05-05T08:41:47.852Z",
+    "tasks": [
+      {
+        "system": "p360",
+        "method": "SyncElevmappe",
+        "status": "completed",
+        "retries": 1,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "62738ddd06aa81c00a4b7ee5",
+        "operations": [
+          {
+            "status": "failed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "error": {
+              "statusCode": 404,
+              "headers": {
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "error": "Ingen funnet med angitt identifikasjon"
+              }
+            },
+            "_id": "62738ddf19097bf39cdd6d6d"
+          },
+          {
+            "status": "completed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "data": {
+              "msg": "Succesfully synced elevmappe",
+              "privatePerson": {
+                "ssn": "12345678911",
+                "oldSsn": "12345678911",
+                "firstName": "Bjarte",
+                "lastName": "Tjøstheim",
+                "streetAddress": "Ukjent adresse",
+                "zipCode": " 9999",
+                "zipPlace": "_ Ukjent",
+                "addressCode": 0,
+                "recno": 237010,
+                "updated": false,
+                "updatedSsn": false
+              },
+              "elevmappe": {
+                "Recno": 234519,
+                "CaseNumber": "22/00045"
+              }
+            },
+            "_id": "62738de019097bf39cdd6d72"
+          }
+        ]
+      },
+      {
+        "system": "p360",
+        "method": "archive",
+        "status": "completed",
+        "retries": 0,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "62738de006aa81c00a4b7ee6",
+        "operations": [
+          {
+            "status": "completed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "data": {
+              "Recno": 211742,
+              "DocumentNumber": "22/00045-4"
+            },
+            "_id": "62738de219097bf39cdd6d7f"
+          }
+        ]
+      },
+      {
+        "system": "p360",
+        "method": "archive",
+        "status": "completed",
+        "retries": 0,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "62738de206aa81c00a4b7ee7",
+        "operations": [
+          {
+            "status": "completed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "data": {
+              "Recno": 211742,
+              "DocumentNumber": "22/00045-4"
+            },
+            "_id": "62738de319097bf39cdd6d90"
+          }
+        ]
+      }
+    ],
+    "__v": 7
+  },
+  {
+    "_id": "62738eb206aa81c00a4b7ee8",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "completed",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 1,
+    "tags": [
+      "OPPMELDING_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T08:45:38.234Z",
+    "modifiedTimestamp": "2022-05-05T08:45:38.234Z",
+    "tasks": [
+      {
+        "system": "p360",
+        "method": "SyncElevmappe",
+        "status": "completed",
+        "retries": 1,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "62738eb406aa81c00a4b7eeb",
+        "operations": [
+          {
+            "status": "failed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "error": {
+              "statusCode": 404,
+              "headers": {
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "error": "Ingen funnet med angitt identifikasjon"
+              }
+            },
+            "_id": "62738eb619097bf39cdd6d9d"
+          },
+          {
+            "status": "completed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "data": {
+              "msg": "Succesfully synced elevmappe",
+              "privatePerson": {
+                "ssn": "12345678911",
+                "oldSsn": "12345678911",
+                "firstName": "Bjarte",
+                "lastName": "Tjøstheim",
+                "streetAddress": "Ukjent adresse",
+                "zipCode": " 9999",
+                "zipPlace": "_ Ukjent",
+                "addressCode": 0,
+                "recno": 237010,
+                "updated": false,
+                "updatedSsn": false
+              },
+              "elevmappe": {
+                "Recno": 234519,
+                "CaseNumber": "22/00045"
+              }
+            },
+            "_id": "62738eb719097bf39cdd6da2"
+          }
+        ]
+      },
+      {
+        "system": "p360",
+        "method": "archive",
+        "status": "completed",
+        "retries": 0,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "62738eb806aa81c00a4b7eec",
+        "operations": [
+          {
+            "status": "completed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "data": {
+              "Recno": 211743,
+              "DocumentNumber": "22/00045-5"
+            },
+            "_id": "62738eb919097bf39cdd6daf"
+          }
+        ]
+      },
+      {
+        "system": "vigo-isi",
+        "method": "OPPMELDING",
+        "status": "completed",
+        "retries": 0,
+        "regarding": "237010",
+        "tags": [
+          "ADADBKHFGSYH",
+          "2022-01-06T00:00:00+01:00",
+          "Opprettet elevmappe",
+          "Status ARKIVERT i VIGO",
+          "22/00045-5"
+        ],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "62738eb906aa81c00a4b7eed",
+        "operations": []
+      }
+    ],
+    "__v": 6
+  },
+  {
+    "_id": "62738eb206aa81c00a4b7ee9",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "completed",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 1,
+    "tags": [
+      "SOKER_N_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T08:45:38.881Z",
+    "modifiedTimestamp": "2022-05-05T08:45:38.881Z",
+    "tasks": [
+      {
+        "system": "p360",
+        "method": "SyncElevmappe",
+        "status": "completed",
+        "retries": 1,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "62738eb906aa81c00a4b7eee",
+        "operations": [
+          {
+            "status": "failed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "error": {
+              "statusCode": 404,
+              "headers": {
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "error": "Ingen funnet med angitt identifikasjon"
+              }
+            },
+            "_id": "62738eba19097bf39cdd6dc6"
+          },
+          {
+            "status": "completed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "data": {
+              "msg": "Succesfully synced elevmappe",
+              "privatePerson": {
+                "ssn": "12345678911",
+                "oldSsn": "12345678911",
+                "firstName": "Bjarte",
+                "lastName": "Tjøstheim",
+                "streetAddress": "Ukjent adresse",
+                "zipCode": " 9999",
+                "zipPlace": "_ Ukjent",
+                "addressCode": 0,
+                "recno": 237010,
+                "updated": false,
+                "updatedSsn": false
+              },
+              "elevmappe": {
+                "Recno": 234519,
+                "CaseNumber": "22/00045"
+              }
+            },
+            "_id": "62738ebc19097bf39cdd6dcb"
+          }
+        ]
+      },
+      {
+        "system": "vigo-isi",
+        "method": "SOKER_N",
+        "status": "completed",
+        "retries": 0,
+        "regarding": "237010",
+        "tags": [
+          "ADADBKHFGSYH",
+          "2022-01-06T00:00:00+01:00",
+          "Opprettet elevmappe",
+          "Status ARKIVERT i VIGO"
+        ],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "62738ebc06aa81c00a4b7eef",
+        "operations": []
+      }
+    ],
+    "__v": 4
+  },
+  {
+    "_id": "62738eb206aa81c00a4b7eea",
+    "system": "vigo-isi",
+    "type": "Arkivering",
+    "status": "completed",
+    "projectId": 172,
+    "e18": false,
+    "parallel": false,
+    "retries": 1,
+    "tags": [
+      "TILBUD_ADADBKHFGSYH"
+    ],
+    "createdTimestamp": "2022-05-05T08:45:38.996Z",
+    "modifiedTimestamp": "2022-05-05T08:45:38.996Z",
+    "tasks": [
+      {
+        "system": "p360",
+        "method": "SyncElevmappe",
+        "status": "completed",
+        "retries": 1,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "62738ebd06aa81c00a4b7ef0",
+        "operations": [
+          {
+            "status": "failed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "error": {
+              "statusCode": 404,
+              "headers": {
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "error": "Ingen funnet med angitt identifikasjon"
+              }
+            },
+            "_id": "62738ebe19097bf39cdd6dde"
+          },
+          {
+            "status": "completed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "data": {
+              "msg": "Succesfully synced elevmappe",
+              "privatePerson": {
+                "ssn": "12345678911",
+                "oldSsn": "12345678911",
+                "firstName": "Bjarte",
+                "lastName": "Tjøstheim",
+                "streetAddress": "Ukjent adresse",
+                "zipCode": " 9999",
+                "zipPlace": "_ Ukjent",
+                "addressCode": 0,
+                "recno": 237010,
+                "updated": false,
+                "updatedSsn": false
+              },
+              "elevmappe": {
+                "Recno": 234519,
+                "CaseNumber": "22/00045"
+              }
+            },
+            "_id": "62738ec019097bf39cdd6de3"
+          }
+        ]
+      },
+      {
+        "system": "p360",
+        "method": "archive",
+        "status": "completed",
+        "retries": 0,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "62738ec006aa81c00a4b7ef1",
+        "operations": [
+          {
+            "status": "completed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "data": {
+              "Recno": 211744,
+              "DocumentNumber": "22/00045-6"
+            },
+            "_id": "62738ec219097bf39cdd6df0"
+          }
+        ]
+      },
+      {
+        "system": "p360",
+        "method": "archive",
+        "status": "completed",
+        "retries": 0,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "62738ec206aa81c00a4b7ef2",
+        "operations": [
+          {
+            "status": "completed",
+            "createdTimestamp": "2022-04-28T12:26:38.258Z",
+            "data": {
+              "Recno": 211744,
+              "DocumentNumber": "22/00045-6"
+            },
+            "_id": "62738ec319097bf39cdd6e01"
+          }
+        ]
+      },
+      {
+        "system": "vigo-isi",
+        "method": "TILBUD",
+        "status": "completed",
+        "retries": 0,
+        "regarding": "237010",
+        "tags": [
+          "ADADBKHFGSYH",
+          "2022-01-06T00:00:00+01:00",
+          "Opprettet elevmappe",
+          "Status ARKIVERT i VIGO",
+          "22/00045-6"
+        ],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "62738ec306aa81c00a4b7ef3",
+        "operations": []
+      }
+    ],
+    "__v": 8
+  },
+  {
+    "_id": "6274f9a606aa81c00a4b7ef4",
+    "system": "vikarapp",
+    "type": "activate_substitutions",
+    "status": "completed",
+    "projectId": 144,
+    "e18": false,
+    "parallel": false,
+    "retries": 0,
+    "tasks": [
+      {
+        "system": "vikarapp",
+        "method": "activate_substitution",
+        "status": "completed",
+        "retries": 0,
+        "tags": [],
+        "createdTimestamp": "2022-04-28T12:26:38.262Z",
+        "_id": "6274f9a619097bf39cdd6e18",
+        "operations": []
+      }
+    ],
+    "tags": [],
+    "createdTimestamp": "2022-05-06T10:34:14.256Z",
+    "modifiedTimestamp": "2022-05-06T10:34:14.256Z",
+    "__v": 0
+  }
+]

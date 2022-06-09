@@ -1,0 +1,8 @@
+[
+  "waiting",
+  "running",
+  "suspended",
+  "retired",
+  "completed",
+  "failed"
+]

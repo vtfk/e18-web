@@ -1,79 +1,138 @@
 import { rest } from 'msw'
+
 import { API } from '../config'
+import { get } from './mock-data'
+import { getRandomHex, getRandomNumber } from './lib/helpers'
+
+const getReqParams = req => {
+  const searchParams = new URLSearchParams(req.url.search)
+  const params = {}
+  for (const [key, value] of searchParams.entries()) {
+    params[key] = value
+  }
+  return params
+}
+
+const getTop = (req, defaultTop = 25) => {
+  const params = getReqParams(req)
+  const top = typeof params.top !== 'undefined' && Number.parseInt(params.top, 10)
+
+  if (Number.isInteger(top)) return top
+  return defaultTop
+}
 
 export const handlers = [
+  // jobs
   rest.get(`${API.URL}/jobs`, (req, res, ctx) => {
+    // TODO: Implement localstorage cache with 4 hours TTL
+    return res(
+      ctx.status(200),
+      ctx.json(get({ top: getTop(req), type: 'jobs' }))
+    )
+  }),
+  rest.put(`${API.URL}/jobs/:id`, (req, res, ctx) => {
+    // TODO: Implement localstorage cache with 4 hours TTL
+    const job = get({ id: req.params.id, type: 'jobs' })
+    if (!job) {
+      return res(
+        ctx.status(404),
+        ctx.json({ message: 'Job id not found' })
+      )
+    }
+
+    if (req.body?.comment) {
+      if (Array.isArray(job.comments)) job.comments.push(req.body.comment)
+      else job.comments = [req.body.comment]
+
+      delete req.body.comment
+    }
+
     return res(
       ctx.status(200),
       ctx.json({
-        "__metadata": {
-          "pagination": {
-            "$skip": 1,
-            "$top": 2,
-            "items": 2,
-            "totalItems": 155,
-            "last_page": 78,
-            "next_page": 2,
-            "first_page_url": "https://test-app-e18-api/api/v1/jobs?%24top=2",
-            "last_page_url": "https://test-app-e18-api/api/v1/jobs?%24top=2",
-            "next_page_url": "https://test-app-e18-api/api/v1/jobs?%24top=2"
-          },
-          "timestamp": "2022-06-08T12:42:33.084Z"
-        },
-        "data": [
-          {
-            "_id": "6272276106aa81c00a4b7ecd",
-            "system": "test",
-            "type": "test",
-            "status": "retired",
-            "projectId": 144,
-            "e18": false,
-            "parallel": false,
-            "retries": 0,
-            "tasks": [
-              {
-                "system": "test",
-                "method": "test",
-                "status": "completed",
-                "retries": 0,
-                "tags": [],
-                "createdTimestamp": "2022-04-28T12:26:38.262Z",
-                "_id": "6272276119097bf39cdd6d17",
-                "operations": []
-              }
-            ],
-            "tags": [],
-            "createdTimestamp": "2022-05-04T07:12:33.926Z",
-            "modifiedTimestamp": "2022-05-04T07:12:33.926Z",
-            "__v": 0
-          },
-          {
-            "_id": "6272316506aa81c00a4b7ece",
-            "system": "test2",
-            "type": "test2",
-            "status": "waiting",
-            "projectId": 144,
-            "e18": true,
-            "parallel": false,
-            "retries": 0,
-            "tasks": [
-              {
-                "system": "test2",
-                "method": "test2",
-                "status": "completed",
-                "retries": 0,
-                "tags": [],
-                "createdTimestamp": "2022-04-28T12:26:38.262Z",
-                "_id": "6272316519097bf39cdd6d1a",
-                "operations": []
-              }
-            ],
-            "tags": [],
-            "createdTimestamp": "2022-05-04T07:55:17.580Z",
-            "modifiedTimestamp": "2022-05-04T07:55:17.580Z",
-            "__v": 0
-          }
-        ]
-      }))
+        ...job,
+        ...req.body
+      })
+    )
+  }),
+  // statistics
+  rest.get(`${API.URL}/statistics`, (req, res, ctx) => {
+    // TODO: Implement localstorage cache with 4 hours TTL
+    return res(
+      ctx.status(200),
+      ctx.json(get({ top: getTop(req), type: 'statistics' }))
+    )
+  }),
+  // apikeys
+  rest.get(`${API.URL}/apikeys`, (req, res, ctx) => {
+    // TODO: Implement localstorage cache with 4 hours TTL
+    return res(
+      ctx.status(200),
+      ctx.json(get({ top: getTop(req), type: 'apikeys' }))
+    )
+  }),
+  rest.post(`${API.URL}/apikeys`, (req, res, ctx) => {
+    // TODO: Implement localstorage cache with 4 hours TTL
+    const { fullitem } = getReqParams(req)
+    const apiKeys = get({ top: getTop(req), type: 'apikeys' })
+    const newApiKey = JSON.parse(JSON.stringify(apiKeys.data[0]))
+
+    newApiKey._id = `${newApiKey._id.slice(0, -10)}${getRandomHex(10)}`
+    newApiKey.hash = getRandomHex(128)
+    newApiKey.enabled = true
+    newApiKey.createdTimestamp = new Date().toISOString()
+    newApiKey.modifiedTimestamp = newApiKey.createdTimestamp
+    newApiKey.name = req.body.name
+
+    if (fullitem) {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          ...newApiKey,
+          key: getRandomHex(getRandomNumber(100, 128))
+        })
+      )
+    } else {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          name: newApiKey.name,
+          key: getRandomHex(getRandomNumber(100, 128))
+        })
+      )
+    }
+  }),
+  rest.put(`${API.URL}/apikeys/:id`, (req, res, ctx) => {
+    // TODO: Implement localstorage cache with 4 hours TTL
+    const apiKey = get({ id: req.params.id, type: 'apikeys' })
+    if (!apiKey) {
+      return res(
+        ctx.status(404),
+        ctx.json({ message: 'ApiKey id not found' })
+      )
+    }
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        ...apiKey,
+        ...req.body
+      })
+    )
+  }),
+  rest.delete(`${API.URL}/apikeys/:id`, (req, res, ctx) => {
+    // TODO: Implement localstorage cache with 4 hours TTL
+    const apiKey = get({ id: req.params.id, type: 'apikeys' })
+    if (!apiKey) {
+      return res(
+        ctx.status(404),
+        ctx.json({ message: 'ApiKey id not found' })
+      )
+    }
+
+    return res(
+      ctx.status(200),
+      ctx.json({})
+    )
   })
 ]

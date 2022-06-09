@@ -1,0 +1,38 @@
+[
+  {
+    "_id": "61f11f7e31bb03ca0dba4c3d",
+    "name": "Test1",
+    "hash": "e5e875c8a1",
+    "enabled": true,
+    "__v": 0,
+    "createdTimestamp": "2022-01-24T11:30:29.429Z",
+    "modifiedTimestamp": "2022-01-24T11:30:29.429Z"
+  },
+  {
+    "_id": "6202607f14deb73f9e0b516c",
+    "name": "Test2",
+    "hash": "1930ffcdea",
+    "enabled": true,
+    "__v": 0,
+    "createdTimestamp": "2022-02-07T14:17:55.175Z",
+    "modifiedTimestamp": "2022-02-07T14:17:55.175Z"
+  },
+  {
+    "_id": "62174e606acc1748df9aba50",
+    "name": "Test3",
+    "hash": "d64521af6d",
+    "enabled": true,
+    "__v": 0,
+    "createdTimestamp": "2022-02-17T11:53:37.848Z",
+    "modifiedTimestamp": "2022-02-17T11:53:37.850Z"
+  },
+  {
+    "_id": "625eb5797aba6653e44b44e2",
+    "name": "Test4",
+    "hash": "f0cf60cd43",
+    "enabled": false,
+    "__v": 0,
+    "createdTimestamp": "2022-04-19T13:12:16.089Z",
+    "modifiedTimestamp": "2022-04-19T13:12:16.089Z"
+  }
+]
