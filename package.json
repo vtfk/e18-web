@@ -20,6 +20,7 @@
     "react-router-dom": "6.2.2",
     "react-scripts": "5.0.1",
     "react-syntax-highlighter": "15.5.0",
+    "react-toastify": "^9.0.4",
     "sass": "1.49.11"
   },
   "scripts": {

@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
-
 import { IconDropdownNavItem, SideNav, TopBar } from '@vtfk/components'
+import { ToastContainer } from 'react-toastify'
 
 import { getValidToken } from '../../auth'
 
@@ -12,6 +12,7 @@ import { PageNotFound } from '../../pages/PageNotFound'
 import { APP } from '../../config'
 
 import './styles.scss'
+import 'react-toastify/dist/ReactToastify.css'
 
 const user = {
   displayName: 'Vegar Beider',
@@ -72,6 +73,8 @@ export function DefaultLayout () {
             })
           }
         </TopBar>
+
+        <ToastContainer newestOnTop pauseOnFocusLoss={false} />
 
         <div className='container'>
           <Routes>
