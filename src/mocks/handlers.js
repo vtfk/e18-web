@@ -77,8 +77,15 @@ export const handlers = [
       )
     }
 
-    const { fullitem } = getReqSearchParams(req)
     const apiKeys = get({ top: getTop(req), type: 'apikeys' })
+    if (apiKeys.data.find(key => key.name === req.body.name)) {
+      return res(
+        ctx.status(400),
+        ctx.json({ message: 'Error: name must be unique' })
+      )
+    }
+
+    const { fullitem } = getReqSearchParams(req)
     const copyApiKey = apiKeys.data.length > 0 ? apiKeys.data[0] : _apikeys[0]
     const newApiKey = JSON.parse(JSON.stringify(copyApiKey))
 
