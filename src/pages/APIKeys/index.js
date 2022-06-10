@@ -83,7 +83,7 @@ export function APIKeys () {
       toast.success(`Successfully ${confirmationItem.action}d key '${name}'`)
     } catch (error) {
       const failed = error.response?.data?.message || error.message || error
-      console.log(`Failed to ${confirmationItem.action} key:`, failed)
+      console.log(`Failed to ${confirmationItem.action} key:`, error)
       toast.error(<>{`Failed to ${confirmationItem.action} key '${name}':`}<br /><b>{failed}</b></>)
     }
 
@@ -98,7 +98,7 @@ export function APIKeys () {
       setNewKey(key)
     } catch (error) {
       const failed = error.response?.data?.message || error.message || error
-      console.log('Failed to add key:', failed)
+      console.log('Failed to add key:', error)
       toast.error(<>{`Failed to add key '${newKeyName}':`}<br /><b>{failed}</b></>)
     }
 
