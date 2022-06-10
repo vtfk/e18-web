@@ -1,6 +1,6 @@
 import { relativeDateFormat } from '@vtfk/utilities'
 import React, { useEffect, useMemo, useState } from 'react'
-import { Dialog, DialogBody, DialogTitle, Heading3, IconButton, StatisticsGroup, StatisticsCard, Table, DialogActions, TextField, ErrorMessage } from '@vtfk/components'
+import { Dialog, DialogActions, DialogBody, DialogTitle, ErrorMessage, Heading3, IconButton, StatisticsGroup, StatisticsCard, Table, TextField } from '@vtfk/components'
 import { isEqual, uniqBy } from 'lodash'
 import { toast } from 'react-toastify'
 import SyntaxHighlighter from 'react-syntax-highlighter'
