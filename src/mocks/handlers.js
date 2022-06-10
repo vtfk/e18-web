@@ -70,6 +70,13 @@ export const handlers = [
     )
   }),
   rest.post(`${API.URL}/apikeys`, (req, res, ctx) => {
+    if (!req.body?.name) {
+      return res(
+        ctx.status(400),
+        ctx.json({ message: 'Error: name cannot be empty' })
+      )
+    }
+
     const { fullitem } = getReqSearchParams(req)
     const apiKeys = get({ top: getTop(req), type: 'apikeys' })
     const copyApiKey = apiKeys.data.length > 0 ? apiKeys.data[0] : _apikeys[0]
