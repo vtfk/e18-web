@@ -74,7 +74,6 @@ export function APIKeys () {
   const handleConfirmationOkClick = async () => {
     const { _id, name } = keys[confirmationItem.index]
     try {
-      setConfirmationItem(null)
       if (confirmationItem.action === 'delete') {
         await removeKeysItem(_id)
       } else if (['enable', 'disable'].includes(confirmationItem.action)) {
@@ -87,6 +86,8 @@ export function APIKeys () {
       console.log(`Failed to ${confirmationItem.action} key:`, failed)
       toast.error(<>{`Failed to ${confirmationItem.action} key '${name}':`}<br /><b>{failed}</b></>)
     }
+
+    setConfirmationItem(null)
   }
 
   const handleNewKeyOkClick = async () => {
@@ -133,7 +134,7 @@ export function APIKeys () {
         confirmationItem && confirmationItem.index > -1 &&
           <ConfirmationDialog
             open
-            title={<span>{`${capitalizeWords(confirmationItem.action)} api key "${keys[confirmationItem.index].name}" ?`}</span>}
+            title={<span>{`${capitalizeWords(confirmationItem.action)} api key "${keys[confirmationItem.index]?.name}" ?`}</span>}
             okBtnText='Yes'
             cancelBtnText='No'
             okBtnDisabled={updating}
