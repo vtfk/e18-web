@@ -100,7 +100,7 @@ export function get (options) {
   if (Number.isInteger(Number.parseInt(top, 10))) {
     // return from localStorage cache
     const items = getItems()
-    if (items.length > 0) return getMetadata(items.length, items.length, type, items)
+    if (Array.isArray(items)) return getMetadata(items.length, items.length, type, items)
 
     // generate items
     const maxListCount = getListCount(type)
