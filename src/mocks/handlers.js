@@ -4,7 +4,7 @@ import { API } from '../config'
 import { add, get, put, remove } from './mock-data'
 import { getRandomHex, getRandomNumber } from './lib/helpers'
 
-const getReqParams = req => {
+const getReqSearchParams = req => {
   const searchParams = new URLSearchParams(req.url.search)
   const params = {}
   for (const [key, value] of searchParams.entries()) {
@@ -14,7 +14,7 @@ const getReqParams = req => {
 }
 
 const getTop = (req, defaultTop = 25) => {
-  const params = getReqParams(req)
+  const params = getReqSearchParams(req)
   const top = typeof params.top !== 'undefined' && Number.parseInt(params.top, 10)
 
   if (Number.isInteger(top)) return top
@@ -68,7 +68,7 @@ export const handlers = [
     )
   }),
   rest.post(`${API.URL}/apikeys`, (req, res, ctx) => {
-    const { fullitem } = getReqParams(req)
+    const { fullitem } = getReqSearchParams(req)
     const apiKeys = get({ top: getTop(req), type: 'apikeys' })
     const newApiKey = JSON.parse(JSON.stringify(apiKeys.data[0]))
 
