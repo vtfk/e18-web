@@ -1,5 +1,6 @@
 import { relativeDateFormat } from '@vtfk/utilities'
 import { Button, Dialog, DialogBody, DialogTitle, Heading3, IconButton, Table, TextField } from '@vtfk/components'
+import { toast } from 'react-toastify'
 import React, { useRef, useState } from 'react'
 import { isEqual } from 'lodash'
 import { words as capitalizeWords } from 'capitalize'
@@ -71,37 +72,43 @@ export function APIKeys () {
   }
 
   const handleConfirmationOkClick = async () => {
+    const { _id, name } = keys[confirmationItem.index]
     try {
-      const { _id, name } = keys[confirmationItem.index]
       setConfirmationItem(null)
       if (confirmationItem.action === 'delete') {
         await removeKeysItem(_id)
       } else if (['enable', 'disable'].includes(confirmationItem.action)) {
         await updateKeysItem(_id, { enabled: confirmationItem.action === 'enable', name })
       }
-      console.log(`Successfully ${confirmationItem.action}d key`, _id) // TODO: Add toast for success
+      console.log(`Successfully ${confirmationItem.action}d key`, _id)
+      toast.success(`Successfully ${confirmationItem.action}d key '${name}'`)
     } catch (error) {
       const failed = error.response?.data?.message || error.message || error
-      console.log(`Failed to ${confirmationItem.action} key:`, failed) // TODO: Add toast for error message
+      console.log(`Failed to ${confirmationItem.action} key:`, failed)
+      toast.error(<>{`Failed to ${confirmationItem.action} key '${name}':`}<br /><b>{failed}</b></>)
     }
   }
 
   const handleNewKeyOkClick = async () => {
     try {
       const key = await newKeysItem(newKeyName)
-      console.log('Successfully added key', newKeyName) // TODO: Add toast for success
-      setOpenNewKeyDialog(false)
-      setNewKeyName('')
+      console.log(`Successfully added key '${newKeyName}'`)
+      toast.success(`Successfully added key '${newKeyName}'`)
       setNewKey(key)
     } catch (error) {
       const failed = error.response?.data?.message || error.message || error
-      console.log('Failed to add key:', failed) // TODO: Add toast for error message
+      console.log('Failed to add key:', failed)
+      toast.error(<>{`Failed to add key '${newKeyName}':`}<br /><b>{failed}</b></>)
     }
+
+    setOpenNewKeyDialog(false)
+    setNewKeyName('')
   }
 
   const copyKey = () => {
     navigator.clipboard.writeText(keyRef.current.value)
     setNewKey(null)
+    toast.info('Copied key to clipboard')
   }
 
   return (
