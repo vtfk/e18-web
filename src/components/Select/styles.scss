@@ -1,0 +1,139 @@
+/*
+  Base style
+*/
+.vtfk-select {
+  position: relative;
+  flex: 1 1 0;
+  width: 100%;
+  min-width: 200px;
+
+  & .input-placeholder {
+    position: relative;
+    min-height: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: rgba(#1D1C28, 0.5);
+
+    & > label {
+      margin: 0!important;
+      margin-left: 0!important;
+      &[required]::before {
+        position: absolute;
+        top: 0px;
+        left: 0.2rem;
+        content: '*';
+        color: red;
+      }
+    }
+  }
+
+  &.disabled {
+    cursor: not-allowed!important;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  & > button {
+    /* Remove default button styling */
+    max-width: none;
+    border: none;
+    box-shadow: none;
+    background: none;
+    user-select: none;
+
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0px 0.5px 5px -0.5px #1f1f1f93;
+
+    &.required::before {
+      position: absolute;
+      top: -5px;
+      left: -2px;
+      content: '*';
+      color: red;
+    }
+
+    &.rounded {
+      background-color: white;
+      border-radius: 20px;
+      border: none;
+    }
+
+    .vtfk-select-content {
+      width: 100%;
+      text-align: left;
+    
+      & .placeholder {
+        color: rgba(#1D1C28, 0.58);
+        font-style: italic;
+      }
+    }
+  }
+
+  & .input-details {
+    min-height: 20px;
+    font-size: 12px;
+    color: #777;
+    margin-top: 0.3rem;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    gap: 0.75rem;
+    cursor: pointer;
+  }
+
+  .item:hover {
+    background-color: lightblue;
+  }
+}
+
+/*
+  Rounded
+*/
+.vtfk-select.rounded {
+  & .input-placeholder {
+    padding-left: 0.75rem;
+  }
+
+  & .input-details {
+    padding-left: 0.75rem;
+  }
+}
+
+.vtfk-select-button-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  &> .icon:hover {
+    transform: scale(1.25);
+  }
+}
+
+.vtfk-select-dropdown {
+  position: absolute;
+  background-color: white;
+  width: 100%;
+  top: 0;
+  left: 0;
+  min-height: 2.75rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  box-shadow: 0px 0.5px 5px -0.5px #1f1f1f;
+  z-index: 50;
+
+  .no-data {
+    display: flex;
+    height: 3rem;
+    justify-content: center;
+    align-items: center;
+  }
+}

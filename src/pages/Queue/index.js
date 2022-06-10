@@ -1,11 +1,12 @@
 import { relativeDateFormat } from '@vtfk/utilities'
 import React, { useEffect, useMemo, useState } from 'react'
 import { Dialog, DialogBody, DialogTitle, Heading3, IconButton, StatisticsGroup, StatisticsCard, Table, DialogActions, TextField, ErrorMessage } from '@vtfk/components'
-import { isEqual } from 'lodash'
+import { isEqual, uniqBy } from 'lodash'
 import { toast } from 'react-toastify'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 
 import ConfirmationDialog from '../../components/ConfirmationDialog'
+import { FilterToolbar } from '../../components/FilterToolbar'
 
 import { useQueueAPI } from '../../hooks/useQueueAPI'
 
@@ -23,6 +24,7 @@ export function Queue () {
   const [types, setTypes] = useState([])
   const [mulitpleTypes, setMulitpleTypes] = useState(false)
   const { allQueue, queue, itemsOptions, loading, setItemsOptions, updateQueueItem, updating } = useQueueAPI('queue')
+  const [queueFilter, setQueueFilter] = useState([])
   const [completed, setCompleted] = useState(0)
   const [failed, setFailed] = useState(0)
   const [retired, setRetired] = useState(0)
@@ -146,8 +148,8 @@ export function Queue () {
     setSuspended(allQueue.filter(item => item.status === 'suspended').length)
     setWaiting(allQueue.filter(item => item.status === 'waiting').length)
 
-    return queue
-  }, [allQueue, queue])
+    return queue.filter(item => queueFilter.includes(item.system))
+  }, [allQueue, queue, queueFilter])
 
   const handleActionClick = async (action, item, message) => {
     const updatePayload = {
@@ -236,6 +238,12 @@ export function Queue () {
           <StatisticsCard className={`${types.includes('retired') ? 'card-type-active' : ''}`} title='retired' onClick={() => handleStatsClick('retired')} value={retired} loading={loading} />
           <StatisticsCard className={`${types.includes('suspended') ? 'card-type-active' : ''}`} title='suspended' onClick={() => handleStatsClick('suspended')} value={suspended} loading={loading} />
         </StatisticsGroup>
+      </div>
+      <div className='queue-filter' style={{ marginBottom: '1rem' }}>
+        <FilterToolbar
+          systemItems={uniqBy(allQueue, 'system').map(item => item.system)}
+          onFilteredItems={filter => { if (!isEqual(queueFilter, filter)) setQueueFilter(filter) }}
+        />
       </div>
       <div className='queue'>
         <Table
