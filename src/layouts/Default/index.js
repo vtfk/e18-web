@@ -47,7 +47,7 @@ const items = [
 const menuItems = [
   {
     onClick: () => {
-      if (APP.IS_MOCK) alert('Mock mode is enabled 🤡')
+      if (APP.IS_MOCK) window.alert('Mock mode is enabled 🤡')
       else window.location.href = '/logout'
     },
     title: 'Logg av 🤡'

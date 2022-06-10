@@ -71,7 +71,7 @@ export function useKeysAPI (defaultItemsOptions = {}, top = 1000000) {
       throw error
     }
   }
-  
+
   const updateKeysItem = async (id, updateObject) => {
     const options = {
       headers: {

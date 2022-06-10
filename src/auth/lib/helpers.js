@@ -31,7 +31,7 @@ export function isFromMobile () {
  */
 export function getTeamsContext (msTeamsInstance) {
   // Attempt to retreive loginHint from TeamsContext
-  return new Promise(async (resolve) => {
+  return new Promise(async (resolve) => { // eslint-disable-line no-async-promise-executor
     try {
       // Simple function to sleep for x ms
       // We have to do this because getContext does not run the callback if no ctx was found

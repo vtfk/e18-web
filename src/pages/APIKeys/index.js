@@ -160,7 +160,7 @@ export function APIKeys () {
               placeholder='Key name'
               value={newKeyName}
               onChange={(e) => setNewKeyName(e.target.value)}
-              />
+            />
           </ConfirmationDialog>
       }
 
