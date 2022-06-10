@@ -4,6 +4,8 @@ import { API } from '../config'
 import { add, get, put, remove } from './mock-data'
 import { getRandomHex, getRandomNumber } from './lib/helpers'
 
+import _apikeys from './data/apikeys.json'
+
 const getReqSearchParams = req => {
   const searchParams = new URLSearchParams(req.url.search)
   const params = {}
@@ -70,7 +72,8 @@ export const handlers = [
   rest.post(`${API.URL}/apikeys`, (req, res, ctx) => {
     const { fullitem } = getReqSearchParams(req)
     const apiKeys = get({ top: getTop(req), type: 'apikeys' })
-    const newApiKey = JSON.parse(JSON.stringify(apiKeys.data[0]))
+    const copyApiKey = apiKeys.data.length > 0 ? apiKeys.data[0] : _apikeys[0]
+    const newApiKey = JSON.parse(JSON.stringify(copyApiKey))
 
     newApiKey._id = `${newApiKey._id.slice(0, -10)}${getRandomHex(10)}`
     newApiKey.hash = getRandomHex(128)
