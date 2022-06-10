@@ -2,6 +2,7 @@ import { relativeDateFormat } from '@vtfk/utilities'
 import React, { useEffect, useMemo, useState } from 'react'
 import { Dialog, DialogBody, DialogTitle, Heading3, IconButton, StatisticsGroup, StatisticsCard, Table, DialogActions, TextField, ErrorMessage } from '@vtfk/components'
 import { isEqual } from 'lodash'
+import { toast } from 'react-toastify'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 
 import ConfirmationDialog from '../../components/ConfirmationDialog'
@@ -171,7 +172,8 @@ export function Queue () {
       setConfirmationItem(defaultConfirmationItem)
     } catch (error) {
       const updateFailed = error.response?.data?.message || error.message || error
-      console.log('Failed to update queue item:', updateFailed)
+      console.log('Failed to update queue item:', error)
+      toast.error(<>{`Failed to update queue item (${action}):`}<br /><b>{updateFailed}</b></>)
       setConfirmationItem({ ...confirmationItem, updateFailed })
     }
   }
