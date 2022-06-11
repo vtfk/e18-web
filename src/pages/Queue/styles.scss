@@ -36,6 +36,12 @@
   margin-bottom: 1rem;
 }
 
+.queue-filter-bulk-section {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
 .queue {
   .item-actions {
     display: flex;

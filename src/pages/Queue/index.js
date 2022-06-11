@@ -1,16 +1,25 @@
 import { relativeDateFormat } from '@vtfk/utilities'
 import React, { useEffect, useMemo, useState } from 'react'
-import { Dialog, DialogActions, DialogBody, DialogTitle, ErrorMessage, Heading3, IconButton, StatisticsGroup, StatisticsCard, Table, TextField } from '@vtfk/components'
+import { Button, Dialog, DialogActions, DialogBody, DialogTitle, ErrorMessage, Heading3, IconButton, StatisticsGroup, StatisticsCard, Table, TextField } from '@vtfk/components'
 import { isEqual, uniqBy } from 'lodash'
 import { toast } from 'react-toastify'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 
 import ConfirmationDialog from '../../components/ConfirmationDialog'
 import { FilterToolbar } from '../../components/FilterToolbar'
+import { Select } from '../../components/Select'
 
 import { useQueueAPI } from '../../hooks/useQueueAPI'
 
 import './styles.scss'
+
+const actions = [
+  'complete',
+  'disable',
+  'enable',
+  'retire',
+  'retry'
+]
 
 const defaultConfirmationItem = {
   message: '',
@@ -25,6 +34,8 @@ export function Queue () {
   const [mulitpleTypes, setMulitpleTypes] = useState(false)
   const { allQueue, queue, itemsOptions, loading, setItemsOptions, updateQueueItem, updating } = useQueueAPI('queue')
   const [queueFilter, setQueueFilter] = useState([])
+  const [selectedValues, setSelectedValues] = useState([])
+  const [selectedBulkAction, setSelectedBulkAction] = useState(undefined)
   const [completed, setCompleted] = useState(0)
   const [failed, setFailed] = useState(0)
   const [retired, setRetired] = useState(0)
@@ -207,6 +218,10 @@ export function Queue () {
     setItemsOptions({ ...itemsOptions, filter: _types })
   }
 
+  function handleBulkActionClick () {
+    console.log('Bulk', selectedBulkAction)
+  }
+
   function getDialogTitleColor () {
     let color
     if (queueItems[dialogItemIndex].status === 'failed') {
@@ -243,7 +258,24 @@ export function Queue () {
         <FilterToolbar
           systemItems={uniqBy(allQueue, 'system').map(item => item.system).sort()}
           onFilteredItems={filter => { if (!isEqual(queueFilter, filter)) setQueueFilter(filter) }}
-        />
+          onSelectedValues={values => setSelectedValues(values)}>
+            {
+              selectedValues.length > 0 &&
+                <div className='queue-filter-bulk-section'>
+                  <Select
+                    items={actions}
+                    onChange={action => setSelectedBulkAction(action)}
+                    placeholder='Choose bulk action'
+                    hidePlaceholder
+                    hideDetails
+                    showClear={false} />
+                  {
+                    selectedBulkAction &&
+                      <Button onClick={() => handleBulkActionClick()} title={`Only the jobs where ${selectedBulkAction} is possible in the list will be changed!`}>{`Bulk ${selectedBulkAction}`}</Button>
+                  }
+                </div>
+            }
+        </FilterToolbar>
       </div>
       <div className='queue'>
         <Table
