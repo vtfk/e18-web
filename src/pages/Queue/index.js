@@ -239,7 +239,7 @@ export function Queue () {
           <StatisticsCard className={`${types.includes('suspended') ? 'card-type-active' : ''}`} title='suspended' onClick={() => handleStatsClick('suspended')} value={suspended} loading={loading} />
         </StatisticsGroup>
       </div>
-      <div className='queue-filter' style={{ marginBottom: '1rem' }}>
+      <div className='queue-filter'>
         <FilterToolbar
           systemItems={uniqBy(allQueue, 'system').map(item => item.system)}
           onFilteredItems={filter => { if (!isEqual(queueFilter, filter)) setQueueFilter(filter) }}
