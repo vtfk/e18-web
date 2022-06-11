@@ -241,7 +241,7 @@ export function Queue () {
       </div>
       <div className='queue-filter'>
         <FilterToolbar
-          systemItems={uniqBy(allQueue, 'system').map(item => item.system)}
+          systemItems={uniqBy(allQueue, 'system').map(item => item.system).sort()}
           onFilteredItems={filter => { if (!isEqual(queueFilter, filter)) setQueueFilter(filter) }}
         />
       </div>
