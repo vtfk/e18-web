@@ -3,20 +3,12 @@ import { rest } from 'msw'
 import { API } from '../config'
 import { add, get, put, remove } from './mock-data'
 import { getRandomHex, getRandomNumber } from './lib/helpers'
+import { getSearchParams } from '../lib/get-search-params'
 
 import _apikeys from './data/apikeys.json'
 
-const getReqSearchParams = req => {
-  const searchParams = new URLSearchParams(req.url.search)
-  const params = {}
-  for (const [key, value] of searchParams.entries()) {
-    params[key] = value
-  }
-  return params
-}
-
 const getTop = (req, defaultTop = 25) => {
-  const params = getReqSearchParams(req)
+  const params = getSearchParams(req)
   const top = typeof params.top !== 'undefined' && Number.parseInt(params.top, 10)
 
   if (Number.isInteger(top)) return top
@@ -87,7 +79,7 @@ export const handlers = [
       )
     }
 
-    const { fullitem } = getReqSearchParams(req)
+    const { fullitem } = getSearchParams(req)
     const copyApiKey = apiKeys.data.length > 0 ? apiKeys.data[0] : _apikeys[0]
     const newApiKey = JSON.parse(JSON.stringify(copyApiKey))
 
