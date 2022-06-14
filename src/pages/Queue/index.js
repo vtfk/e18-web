@@ -15,10 +15,10 @@ import './styles.scss'
 
 const actions = [
   'complete',
-  'disable',
-  'enable',
   'retire',
-  'retry'
+  'retry',
+  'suspend',
+  'unsuspend'
 ]
 
 const defaultConfirmationItem = {
