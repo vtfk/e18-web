@@ -32,10 +32,11 @@ const defaultConfirmationItem = {
 export function Queue () {
   const [types, setTypes] = useState([])
   const [mulitpleTypes, setMulitpleTypes] = useState(false)
-  const { allQueue, queue, itemsOptions, loading, setItemsOptions, updateQueueItem, updating } = useQueueAPI('queue')
+  const { allQueue, queue, itemsOptions, loading, setItemsOptions, updateQueueItem, updateQueueItemData, updating } = useQueueAPI('queue')
   const [queueFilter, setQueueFilter] = useState([])
   const [selectedValues, setSelectedValues] = useState([])
   const [selectedBulkAction, setSelectedBulkAction] = useState(undefined)
+  const [bulkUpdating, setBulkUpdating] = useState(false)
   const [completed, setCompleted] = useState(0)
   const [failed, setFailed] = useState(0)
   const [retired, setRetired] = useState(0)
@@ -161,33 +162,50 @@ export function Queue () {
 
     return queue.filter(item => queueFilter.includes(item.system))
   }, [allQueue, queue, queueFilter])
+  
+  const queueItemsForBulkAction = useMemo(() => {
+    return queueItems.filter(item => {
+      if (selectedBulkAction === 'complete' && item.status !== 'completed') return true
+      if (selectedBulkAction === 'retire' && !['completed', 'retired'].includes(item.status)) return true
+      if (selectedBulkAction === 'retry' && !['completed', 'waiting', 'suspended', 'retired', 'running'].includes(item.status) && item.e18) return true
+      if (selectedBulkAction === 'suspend' && !['completed', 'retired', 'suspended'].includes(item.status) && item.e18) return true
+      if (selectedBulkAction === 'unsuspend' && item.status === 'suspended' && item.e18) return true
 
-  const handleActionClick = async (action, item, message) => {
+      return false
+    })
+  }, [selectedBulkAction, queueItems])
+
+  const handleActionClick = async (action, item, message, updateQueue = true) => {
     const updatePayload = {
       comment: {
         message,
         user: 'noen.andre@vtfk.no' // TODO: Endres til pålogget bruker
       }
     }
-    if (['retry', 'unsuspended'].includes(action)) {
+
+    if (['retry', 'unsuspended', 'unsuspend'].includes(action)) {
       updatePayload.status = 'waiting'
-    } else if (action === 'suspended') {
+    } else if (['suspended', 'suspend'].includes(action)) {
       updatePayload.status = 'suspended'
     } else if (action === 'retire') {
       updatePayload.status = 'retired'
+    } else if (action === 'complete') {
+      updatePayload.status = 'completed'
     } else {
       console.log('WHHAAATT? A new action? :O', action)
       return
     }
 
     try {
-      await updateQueueItem(item._id, updatePayload)
+      const updatedData = await updateQueueItem(item._id, updatePayload, updateQueue)
       setConfirmationItem(defaultConfirmationItem)
+      return { item: updatedData, success: true}
     } catch (error) {
       const updateFailed = error.response?.data?.message || error.message || error
       console.log('Failed to update queue item:', error)
       toast.error(<>{`Failed to update queue item (${action}):`}<br /><b>{updateFailed}</b></>)
       setConfirmationItem({ ...confirmationItem, updateFailed })
+      return { item, success: false }
     }
   }
 
@@ -218,8 +236,21 @@ export function Queue () {
     setItemsOptions({ ...itemsOptions, filter: _types })
   }
 
-  function handleBulkActionClick () {
-    console.log('Bulk', selectedBulkAction)
+  async function handleBulkActionClick () {
+    const tempQueueItemsForBulkAction = []
+    const failed = []
+
+    setBulkUpdating(true)
+    for await (const item of queueItemsForBulkAction) {
+      const updatedItemData = await handleActionClick(selectedBulkAction, item, `Status changed to ${selectedBulkAction}`, false)
+      if (updatedItemData.success) tempQueueItemsForBulkAction.push(updatedItemData.item)
+      else failed.push(updatedItemData.item)
+    }
+    updateQueueItemData(tempQueueItemsForBulkAction)
+    setBulkUpdating(false)
+
+    toast.success(`Bulk ${selectedBulkAction} finished on ${tempQueueItemsForBulkAction.length} items${failed.length > 0 ? `, ${failed.length} failed` : ''}`)
+  }
   }
 
   function getDialogTitleColor () {
@@ -271,7 +302,7 @@ export function Queue () {
                     showClear={false} />
                   {
                     selectedBulkAction &&
-                      <Button disabled={queueItemsForBulkAction.length === 0} onClick={() => handleBulkActionClick()} title={queueItemsForBulkAction.length === 0 ? `No jobs to ${selectedBulkAction}` : `Bulk ${selectedBulkAction} ${queueItemsForBulkAction.length} ${queueItemsForBulkAction.length > 1 ? 'items' : 'item'}`}>{`Bulk ${selectedBulkAction} ${queueItemsForBulkAction.length > 0 ? `${queueItemsForBulkAction.length} ${queueItemsForBulkAction.length > 1 ? 'items' : 'item'}` : ''}`}</Button>
+                      <Button disabled={queueItemsForBulkAction.length === 0 || bulkUpdating} onClick={() => handleBulkActionClick()} title={queueItemsForBulkAction.length === 0 ? `No jobs to ${selectedBulkAction}` : `Bulk ${selectedBulkAction} ${queueItemsForBulkAction.length} ${queueItemsForBulkAction.length > 1 ? 'items' : 'item'}`}>{`Bulk ${selectedBulkAction} ${queueItemsForBulkAction.length > 0 ? `${queueItemsForBulkAction.length} ${queueItemsForBulkAction.length > 1 ? 'items' : 'item'}` : ''}`}</Button>
                   }
                 </div>
             }
@@ -281,7 +312,7 @@ export function Queue () {
         <Table
           headers={headers}
           items={queueItems}
-          isLoading={loading}
+          isLoading={loading || bulkUpdating}
         />
 
         <Dialog

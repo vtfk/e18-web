@@ -56,7 +56,23 @@ export function useQueueAPI (defaultDatabase, defaultQueue = [], defaultItemsOpt
     return orderBy(filtered, options.orderBy, options.order)
   }, [options, _queue])
 
-  const updateQueueItem = async (id, updateObject) => {
+  const updateQueueItemData = async data => {
+    if (!Array.isArray(data)) {
+      data = [data]
+    }
+
+    const tempQueue = _queue.map(q => {
+      const dataItem = data.find(d => d._id === q._id)
+      if (dataItem) {
+        q = dataItem
+      }
+      return q
+    })
+
+    setQueue(tempQueue)
+  }
+
+  const updateQueueItem = async (id, updateObject, updateQueue = true) => {
     const options = {
       headers: {
         'X-API-KEY': API.TOKEN
@@ -66,13 +82,7 @@ export function useQueueAPI (defaultDatabase, defaultQueue = [], defaultItemsOpt
     try {
       setUpdating(true)
       const { data } = await axios.put(`${API.URL}/jobs/${id}`, updateObject, options)
-      const tempQueue = _queue.map(q => {
-        if (q._id === data._id) {
-          q = data
-        }
-        return q
-      })
-      setQueue(tempQueue)
+      if (updateQueue) updateQueueItemData(data)
       setUpdating(false)
       return data
     } catch (error) {
@@ -88,6 +98,7 @@ export function useQueueAPI (defaultDatabase, defaultQueue = [], defaultItemsOpt
     queue,
     setItemsOptions,
     updateQueueItem,
+    updateQueueItemData,
     updating
   }
 }
