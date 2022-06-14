@@ -271,7 +271,7 @@ export function Queue () {
                     showClear={false} />
                   {
                     selectedBulkAction &&
-                      <Button disabled={queueItemsForBulkAction.length === 0} onClick={() => handleBulkActionClick()} title={`Only the jobs where ${selectedBulkAction} is possible in the list will be changed!`}>{`Bulk ${selectedBulkAction}`}</Button>
+                      <Button disabled={queueItemsForBulkAction.length === 0} onClick={() => handleBulkActionClick()} title={queueItemsForBulkAction.length === 0 ? `No jobs to ${selectedBulkAction}` : `Bulk ${selectedBulkAction} ${queueItemsForBulkAction.length} ${queueItemsForBulkAction.length > 1 ? 'items' : 'item'}`}>{`Bulk ${selectedBulkAction}`}</Button>
                   }
                 </div>
             }
