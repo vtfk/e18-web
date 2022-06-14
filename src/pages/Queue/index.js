@@ -251,6 +251,11 @@ export function Queue () {
 
     toast.success(`Bulk ${selectedBulkAction} finished on ${tempQueueItemsForBulkAction.length} items${failed.length > 0 ? `, ${failed.length} failed` : ''}`)
   }
+
+  function handleSelectedFilterValues (values) {
+    setSelectedValues(values)
+
+    if (values.length === 0) setSelectedBulkAction('')
   }
 
   function getDialogTitleColor () {
@@ -289,7 +294,7 @@ export function Queue () {
         <FilterToolbar
           systemItems={uniqBy(allQueue, 'system').map(item => item.system).sort()}
           onFilteredItems={filter => { if (!isEqual(queueFilter, filter)) setQueueFilter(filter) }}
-          onSelectedValues={values => setSelectedValues(values)}>
+          onSelectedValues={values => handleSelectedFilterValues(values)}>
             {
               selectedValues.length > 0 &&
                 <div className='queue-filter-bulk-section'>
