@@ -11,6 +11,8 @@ import { Select } from '../../components/Select'
 
 import { useQueueAPI } from '../../hooks/useQueueAPI'
 
+import { getSearchParams } from '../../lib/get-search-params'
+
 import './styles.scss'
 
 const actions = [
@@ -146,6 +148,9 @@ export function Queue () {
 
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('keyup', handleKeyUp)
+
+    const searchParams = getSearchParams(window)
+    if (searchParams.systems) setSelectedValues(searchParams.systems.split(','))
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
