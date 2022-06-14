@@ -154,11 +154,13 @@ export function Queue () {
   }, [])
 
   const queueItems = useMemo(() => {
-    setCompleted(allQueue.filter(item => item.status === 'completed').length)
-    setFailed(allQueue.filter(item => item.status === 'failed').length)
-    setRetired(allQueue.filter(item => item.status === 'retired').length)
-    setSuspended(allQueue.filter(item => item.status === 'suspended').length)
-    setWaiting(allQueue.filter(item => item.status === 'waiting').length)
+    const filteredQueue = allQueue.filter(item => queueFilter.includes(item.system))
+
+    setCompleted(filteredQueue.filter(item => item.status === 'completed').length)
+    setFailed(filteredQueue.filter(item => item.status === 'failed').length)
+    setRetired(filteredQueue.filter(item => item.status === 'retired').length)
+    setSuspended(filteredQueue.filter(item => item.status === 'suspended').length)
+    setWaiting(filteredQueue.filter(item => item.status === 'waiting').length)
 
     return queue.filter(item => queueFilter.includes(item.system))
   }, [allQueue, queue, queueFilter])
@@ -293,7 +295,7 @@ export function Queue () {
       <div className='queue-filter'>
         <FilterToolbar
           systemItems={uniqBy(allQueue, 'system').map(item => item.system).sort()}
-          onFilteredItems={filter => { if (!isEqual(queueFilter, filter)) setQueueFilter(filter) }}
+          onFilteredItems={filter => { if (!isEqual(queueFilter, filter)) { setQueueFilter(filter); console.log('Queue filter updated:', filter) } }}
           onSelectedValues={values => handleSelectedFilterValues(values)}>
             {
               selectedValues.length > 0 &&
