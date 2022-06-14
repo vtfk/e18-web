@@ -80,11 +80,10 @@ export function APIKeys () {
         await updateKeysItem(_id, { enabled: confirmationItem.action === 'enable', name })
       }
       console.log(`Successfully ${confirmationItem.action}d key`, _id)
-      toast.success(`Successfully ${confirmationItem.action}d key '${name}'`)
+      toast.success(<>Successfully {confirmationItem.action}d key <strong>{name}</strong></>)
     } catch (error) {
-      const failed = error.response?.data?.message || error.message || error
       console.log(`Failed to ${confirmationItem.action} key:`, error)
-      toast.error(<>{`Failed to ${confirmationItem.action} key '${name}':`}<br /><b>{failed}</b></>)
+      toast.error(<>Failed to {confirmationItem.action} key <strong>{name}</strong></>)
     }
 
     setConfirmationItem(null)
@@ -94,12 +93,11 @@ export function APIKeys () {
     try {
       const key = await newKeysItem(newKeyName)
       console.log(`Successfully added key '${newKeyName}'`)
-      toast.success(`Successfully added key '${newKeyName}'`)
+      toast.success(<>Successfully added key <strong>{newKeyName}</strong></>)
       setNewKey(key)
     } catch (error) {
-      const failed = error.response?.data?.message || error.message || error
-      console.log('Failed to add key:', error)
-      toast.error(<>{`Failed to add key '${newKeyName}':`}<br /><b>{failed}</b></>)
+      console.log('Failed to add key', newKeyName, ':', error)
+      toast.error(<>Failed to add key <strong>{newKeyName}</strong></>)
     }
 
     setOpenNewKeyDialog(false)
@@ -109,7 +107,7 @@ export function APIKeys () {
   const copyKey = () => {
     navigator.clipboard.writeText(keyRef.current.value)
     setNewKey(null)
-    toast.info('Copied key to clipboard')
+    toast.info('Key copied to clipboard')
   }
 
   return (

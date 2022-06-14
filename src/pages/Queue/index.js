@@ -205,7 +205,7 @@ export function Queue () {
     } catch (error) {
       const updateFailed = error.response?.data?.message || error.message || error
       console.log('Failed to update queue item:', error)
-      toast.error(<>{`Failed to update queue item (${action}):`}<br /><b>{updateFailed}</b></>)
+      toast.error(<>Failed to <strong>{action}</strong> queue item</>)
       setConfirmationItem({ ...confirmationItem, updateFailed })
       return { item, success: false }
     }
@@ -251,7 +251,7 @@ export function Queue () {
     updateQueueItemData(tempQueueItemsForBulkAction)
     setBulkUpdating(false)
 
-    toast.success(`Bulk ${selectedBulkAction} finished on ${tempQueueItemsForBulkAction.length} items${failed.length > 0 ? `, ${failed.length} failed` : ''}`)
+    toast.success(<>Bulk <strong>{selectedBulkAction}</strong> finished on {tempQueueItemsForBulkAction.length} {tempQueueItemsForBulkAction.length > 1 ? 'items': 'item'}{failed.length > 0 ? `, ${failed.length} failed to ${selectedBulkAction}` : ''}</>)
   }
 
   function handleSelectedFilterValues (values) {
