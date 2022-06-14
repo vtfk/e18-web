@@ -44,6 +44,8 @@ export const handlers = [
       if (Array.isArray(job.comments)) job.comments.push(req.body.comment)
       else job.comments = [req.body.comment]
 
+      req.body.modifiedTimestamp = new Date().toISOString()
+
       delete req.body.comment
     }
 
@@ -124,6 +126,8 @@ export const handlers = [
         ctx.json({ message: 'ApiKey id not found' })
       )
     }
+
+    req.body.modifiedTimestamp = new Date().toISOString()
 
     const updatedApiKey = { ...apiKey, ...req.body }
     put({ data: updatedApiKey, type: 'apikeys' })
