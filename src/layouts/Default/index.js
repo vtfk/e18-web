@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { IconDropdownNavItem, SideNav, TopBar } from '@vtfk/components'
+import { SideNav, TopBar } from '@vtfk/components'
 import { ToastContainer } from 'react-toastify'
 
 import { getValidToken } from '../../auth'
