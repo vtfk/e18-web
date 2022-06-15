@@ -64,15 +64,7 @@ export function DefaultLayout () {
         <SideNav title='E18' items={items} useMini />
 
         {/* Menu bar shown on screen sizes greater than 1000px */}
-        <TopBar displayName={token?.user?.displayName || user.displayName} firstName={token?.user?.firstName || user.firstName} lastName={token?.user?.lastName || user.lastName}>
-          {
-            menuItems.map((item, index) => {
-              return (
-                <IconDropdownNavItem key={index} onClick={() => item.onClick()} title={item.title} closeOnClick />
-              )
-            })
-          }
-        </TopBar>
+        <TopBar displayName={token?.user?.displayName || user.displayName} firstName={token?.user?.firstName || user.firstName} lastName={token?.user?.lastName || user.lastName} items={menuItems} />
 
         <ToastContainer newestOnTop pauseOnFocusLoss={false} />
 
