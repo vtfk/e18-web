@@ -1377,10 +1377,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@microsoft/teams-js@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/@microsoft/teams-js/-/teams-js-2.0.0.tgz"
-  integrity sha512-13Mag9MkUplbZxK1qu55r8YSNkuOpmmZuha7P8Z26ef5ZnrYm9PM3JCoWgDvBqILxWF2e1Yo/5V2Ic9yD9rU0Q==
+"@microsoft/teams-js@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/@microsoft/teams-js/-/teams-js-2.1.0.tgz"
+  integrity sha512-ofkGLIYMxO3whDN+Io83dYPb976iC4SNwahorSFZgyRLSML8avvPni7k0UWXKC9FDU3GjDz1ArC1UcT1Y5pYpQ==
   dependencies:
     debug "4.3.3"
 
