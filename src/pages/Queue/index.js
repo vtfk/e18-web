@@ -35,6 +35,7 @@ export function Queue () {
   const [types, setTypes] = useState([])
   const [mulitpleTypes, setMulitpleTypes] = useState(false)
   const { allQueue, queue, itemsOptions, loading, setItemsOptions, updateQueueItem, updateQueueItemData, updating } = useQueueAPI('queue')
+  const [selectedTableIds, setSelectedTableIds] = useState([])
   const [queueFilter, setQueueFilter] = useState([])
   const [selectedValues, setSelectedValues] = useState([])
   const [selectedBulkAction, setSelectedBulkAction] = useState(undefined)
@@ -172,15 +173,15 @@ export function Queue () {
   
   const queueItemsForBulkAction = useMemo(() => {
     return queueItems.filter(item => {
-      if (selectedBulkAction === 'complete' && item.status !== 'completed') return true
-      if (selectedBulkAction === 'retire' && !['completed', 'retired'].includes(item.status)) return true
-      if (selectedBulkAction === 'retry' && !['completed', 'waiting', 'suspended', 'retired', 'running'].includes(item.status) && item.e18) return true
-      if (selectedBulkAction === 'suspend' && !['completed', 'retired', 'suspended'].includes(item.status) && item.e18) return true
-      if (selectedBulkAction === 'unsuspend' && item.status === 'suspended' && item.e18) return true
+      if (selectedBulkAction === 'complete' && item.status !== 'completed') return selectedTableIds.length > 0 ? selectedTableIds.includes(item._id) : true
+      if (selectedBulkAction === 'retire' && !['completed', 'retired'].includes(item.status)) return selectedTableIds.length > 0 ? selectedTableIds.includes(item._id) : true
+      if (selectedBulkAction === 'retry' && !['completed', 'waiting', 'suspended', 'retired', 'running'].includes(item.status) && item.e18) return selectedTableIds.length > 0 ? selectedTableIds.includes(item._id) : true
+      if (selectedBulkAction === 'suspend' && !['completed', 'retired', 'suspended'].includes(item.status) && item.e18) return selectedTableIds.length > 0 ? selectedTableIds.includes(item._id) : true
+      if (selectedBulkAction === 'unsuspend' && item.status === 'suspended' && item.e18) return selectedTableIds.length > 0 ? selectedTableIds.includes(item._id) : true
 
       return false
     })
-  }, [selectedBulkAction, queueItems])
+  }, [selectedBulkAction, queueItems, selectedTableIds])
 
   const handleActionClick = async (action, item, message, updateQueue = true) => {
     const updatePayload = {
@@ -325,6 +326,8 @@ export function Queue () {
           headers={headers}
           items={queueItems}
           isLoading={loading || bulkUpdating}
+          showSelect={!!selectedBulkAction}
+          onSelectedIdsChanged={ids => { setSelectedTableIds(ids); console.log('Selected ids:', ids) }}
         />
 
         <Dialog
