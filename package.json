@@ -6,7 +6,7 @@
     "@azure/msal-browser": "2.24.0",
     "@microsoft/teams-js": "2.0.0",
     "@testing-library/jest-dom": "5.16.4",
-    "@testing-library/react": "12.1.5",
+    "@testing-library/react": "13.4.0",
     "@testing-library/user-event": "13.5.0",
     "@vtfk/components": "0.12.0",
     "@vtfk/utilities": "1.4.0",
