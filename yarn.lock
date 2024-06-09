@@ -23,17 +23,17 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
-"@azure/msal-browser@2.24.0":
-  version "2.24.0"
-  resolved "https://registry.npmjs.org/@azure/msal-browser/-/msal-browser-2.24.0.tgz"
-  integrity sha512-P4Z8mQ6hTuA9ss3HCltso7fRmuX1raaU6444G35c0FhaD6hfqViFYRa7hk16AiAs9HkUQHbBaL3gLjKMpX3heA==
+"@azure/msal-browser@2.39.0":
+  version "2.39.0"
+  resolved "https://registry.npmjs.org/@azure/msal-browser/-/msal-browser-2.39.0.tgz"
+  integrity sha512-kks/n2AJzKUk+DBqZhiD+7zeQGBl+WpSOQYzWy6hff3bU0ZrYFqr4keFLlzB5VKuKZog0X59/FGHb1RPBDZLVg==
   dependencies:
-    "@azure/msal-common" "^6.3.0"
+    "@azure/msal-common" "13.3.3"
 
-"@azure/msal-common@^6.3.0":
-  version "6.3.0"
-  resolved "https://registry.npmjs.org/@azure/msal-common/-/msal-common-6.3.0.tgz"
-  integrity sha512-ZyLq9GdnLBi/83YpysE86TFKbA0TuvfNAN5Psqu20cdAjLo/4rw4ttiItdh1G//XeGErHk9qn57gi2AYU1b5/Q==
+"@azure/msal-common@13.3.3":
+  version "13.3.3"
+  resolved "https://registry.npmjs.org/@azure/msal-common/-/msal-common-13.3.3.tgz"
+  integrity sha512-n278DdCXKeiWhLwhEL7/u9HRMyzhUXLefeajiknf6AmEedoiOiv2r5aRJ7LXdT3NGPyubkdIbthaJlVtmuEqvA==
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.16.0", "@babel/code-frame@^7.16.7", "@babel/code-frame@^7.8.3":
   version "7.16.7"
